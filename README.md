@@ -74,6 +74,8 @@ The Gantt chart needs to include key milestones, the tasks needed, who will comp
 7. [System prototyping and integration] Create an overall system design from the subsystems, a prototype for client feedback
 8. [System Review and Rework] Review the prototype with the client and rework the system-level design and its subsystems 
 
+![gantt](https://user-images.githubusercontent.com/54693111/129131969-f61c0fe3-1c7a-4092-aaa9-a13898a5910e.jpg)
+
 
 
 
