@@ -1,0 +1,145 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  tr:first-child{ font-weight: bold }
+
+  h1 {
+    color: #05457f;
+  }
+
+  body {
+    font-family: "Lato", sans-serif;
+    font-size: 150%;
+    background-color: #f2f2f2;
+    /* background-image: url("https://i.gifer.com/PHiR.gif"); */
+    
+  }
+
+
+  .center {
+    display: block;
+    margin: auto;
+
+    margin-top: 50px;
+    text-align: center;
+    
+  }
+
+  .centered {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+  }
+
+  table {
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;;
+    margin-left: 5%;
+    font-size: 100%;
+
+  }
+
+  .tableDiv {
+    border: 1px solid black;
+    background-color: #f2f2f2;
+    height: 90%;
+    width: 90%;
+    overflow: auto;
+  }
+
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #05457f; /* Uni Blue */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+
+    font-weight: bold
+  }
+  
+
+  
+
+  /* The navigation menu links */
+
+
+  .default {
+    text-align: center;
+    /* padding: 6px 8px 6px 16px; */
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff; /* Uni Blue */
+    display: block;
+  }
+
+  .current {
+    text-align: center;
+    /* padding: 6px 8px 6px 16px; */
+    text-decoration: none;
+    font-size: 25px;
+    color: #05457f; /* Uni Blue */
+    background-color: #f2f2f2;
+    display: block;
+    
+  }
+  
+  
+  
+  /* Style page content */
+  .main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  a {
+    display: block;
+    position: relative;
+    padding: 0.4em 0;
+  }
+  
+  /* Fade in */
+  a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.125em;
+    background-color: #ffffff;
+    opacity: 0;
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  a:hover::after,
+  a:focus::after {
+    opacity: 1;
+    transform: translate3d(0, 0.2em, 0);
+  }
+
+  .sidenav a::after {
+  opacity: 1;
+  transform: scale(0);
+  transform-origin: center;
+}
+
+    .sidenav a:hover::after,
+    .sidenav a:focus::after{
+  transform: scale(1);
+}
+
+

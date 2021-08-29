@@ -1,0 +1,57 @@
+<head> 
+  <link rel="stylesheet" href="csv.css">
+  <script src="csv.js" type="text/javascript" defer="true"></script>
+
+</head>
+<body>
+
+  <div class="sidenav">
+
+    <img src="https://learningessentials.auckland.ac.nz/files/2019/09/UOA-VR-RGB.png" alt="uoa logo" 
+    onclick="showHome();"
+    style="width:75%; margin: auto; margin-bottom: 15px; 
+    display: block; margin-left: auto; margin-right: auto;">
+  
+    <a href="#" class = "default">Log in</a>
+  
+    <a id = "upbar" href="#"  onclick="showUpload()" class = "default">Upload</a>
+  
+    <a id = "filebar" href="#" onclick="showFiles()" class = "default">Files</a>
+    <a id = "sendbar" href="#" onclick="showSend()" class = "default">Send</a>
+  </div>
+  
+  <div id = "home" class= "main" style = "display: block;">
+    <h1 class="center">Team 13 G-Unit Feedback Sending Project</h1>
+  
+    <img src="https://i.pinimg.com/originals/8f/f4/f3/8ff4f30b9e621b8879cf6eb0f6f4d519.gif"
+              alt="Image goes here &#129371;"
+              height=50% class="centered" style = "border: 5px solid #05457f;">
+  
+  </div>
+  
+  
+  <div id = "upload" class="main" style = "display: none;">
+    <h1>Upload</h1>
+    <form id="opener">
+      <input type="file" id="csvFile" accept=".csv" />
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <div id = "tableDiv" class = "tableDiv"></div>
+
+  </div>
+
+  <div id = "files" class="main" style = "display: none;">
+    <h1>Files</h1>
+
+  </div>
+
+  <div id = "send" class="main" style = "display: none;">
+    <h1>Send</h1>
+
+  </div>
+
+
+
+
