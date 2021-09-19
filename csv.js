@@ -1,3 +1,70 @@
+//User submitted email template
+var textTemplate = '';
+//CSV gathered columns
+var columns = [];
+//CSV gathered student data
+var csvValues = [];
+//Merged template and CSV data
+var emails = {};
+//Name of CSV file
+var spreadSheet = '';
+//Name of lecturer
+var lecturer = '';
+
+function sendMail(){
+
+    for (const [email, template] of Object.entries(emails)) {
+    //Create and Post HttpRequest to SendMail.php
+      var httpr = new XMLHttpRequest();
+      var fd = new FormData();
+      fd.append("email", email);
+      fd.append("template", template);
+      httpr.onload = function(){
+        const serverResponse = document.getElementById("serverResponse");
+      }
+      httpr.open("POST", "sendMail.php");
+      httpr.send(fd);
+    }
+  }
+
+// function sendData(){
+//     for (let i =0; i <csvValues.length;i++){
+//       var httpr = new XMLHttpRequest();
+//       var fd = new FormData();
+//       fd.append("lecturer", lecturer);
+//       fd.append("email", csvValues[i]["email"]);
+//       fd.append("column", columns);
+//       fd.append("spreadSheet",spreadSheet);
+//       fd.append("csvValues", JSON.stringify(csvValues[i]));
+//       httpr.onload = function(){
+//         const serverResponse = document.getElementById("serverResponse");
+//         serverResponse.innerHTML = this.responseText;
+//       }
+//       httpr.open("POST", "post.php");
+//       httpr.send(fd);
+//     }
+// }
+  
+
+function mergeData(){
+    //someone work on this
+    for (let i =0; i <csvValues.length;i++){
+        var email = textTemplate;
+        while (email.indexOf('[') != -1){
+            var remove = email.slice(email.indexOf('['),email.indexOf(']') + 1)
+            var header = email.slice(email.indexOf('[') + 1,email.indexOf(']'))
+            if (csvValues[i][header]){
+                email = email.replace(remove,csvValues[i][header]);
+            }
+            else{
+                email = email.replace(remove, "fix");
+            }
+        }
+        emails[csvValues[i]['email']] = email
+    }
+    console.log(emails)
+}
+
 /* Side bar elements */
 filebar = document.getElementById('filebar');
 sendbar = document.getElementById('sendbar');
@@ -101,6 +168,18 @@ const showSend = () => {
 
 const myForm = document.getElementById("opener");
 const csvFile = document.getElementById("csvFile");
+const txtFile = document.getElementById("template");
+const lecturerInput = document.getElementById("lecturer");
+
+document.getElementById('txt').addEventListener('submit', function (e) {
+    input = txtFile.files[0];
+    e.preventDefault();  
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        textTemplate = e.target.result
+    };
+    reader.readAsText(input);
+  });
 
 function csvToArray(str, delimiter = ",") {
     /* Array of headers */
@@ -199,12 +278,16 @@ myForm.addEventListener("submit", function(e) {
     e.preventDefault();
     const input = csvFile.files[0];
     const reader = new FileReader();
+    spreadSheet = csvFile.value.substring(csvFile.value.lastIndexOf("\\")+1);
+    lecturer = lecturerInput.value;
 
     reader.onload = function(e) {
         const text = e.target.result;
         const data = csvToArray(text);
         const headers = data[0]
         const values = data[1]
+        columns = data[0];
+        csvValues = data[1];
 
         // Create table
         var main = document.getElementById("tableDiv");
