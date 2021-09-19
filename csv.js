@@ -139,6 +139,62 @@ function csvToArray(str, delimiter = ",") {
     return farray;
 }
 
+// Function to sort table column by index
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("dataTable");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
 myForm.addEventListener("submit", function(e) {
     e.preventDefault();
     const input = csvFile.files[0];
@@ -164,6 +220,10 @@ myForm.addEventListener("submit", function(e) {
             hcell.textContent = h;
         }
 
+    
+
+
+
         // Adds array values corresponding to the correct header to table
         for (arr of values) {
             table.insertRow();
@@ -173,6 +233,25 @@ myForm.addEventListener("submit", function(e) {
                 vcell.textContent = arr[headers[i]];
             }
         }
+        
+        // Gets the email header cell
+        let email = table.rows[0].cells[0];
+        // Gets the PrefName header cell
+        let name = table.rows[0].cells[1];
+
+        // Adds ability to sort by header cell
+        email.setAttribute('onclick','sortTable(0);');
+        // Adds pointer cursor on hover
+        email.setAttribute('style', 'cursor: pointer;');
+        // Sets class to invert colors on highlight
+        email.setAttribute('class', 'cellh');
+        
+        // Adds ability to sort by header cell
+        name.setAttribute('onclick','sortTable(1);');
+        // Adds pointer cursor on hover
+        name.setAttribute('style', 'cursor: pointer;');
+        // Sets class to invert colors on highlight
+        name.setAttribute('class', 'cellh');
 
         // Clears table div to show the current file
         main.innerHTML = "";
@@ -181,4 +260,8 @@ myForm.addEventListener("submit", function(e) {
         main.appendChild(table);
     };
     reader.readAsText(input);
-});
+})
+
+
+
+;

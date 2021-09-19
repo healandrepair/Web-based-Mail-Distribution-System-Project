@@ -37,6 +37,12 @@
         margin-top: -50px;
         margin-left: -100px;
     }
+
+    /* Cell invert on highlight */
+    .cellh:hover {
+        background:black;
+        color:white;
+    }
     
     table {
         margin-top: 2.5%;
