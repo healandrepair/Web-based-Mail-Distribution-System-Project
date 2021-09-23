@@ -189,16 +189,12 @@ document.getElementById('txt').addEventListener('submit', function(e) {
     var reader = new FileReader();
     reader.onload = function(e) {
         textTemplate = e.target.result;
-
         let temp = document.getElementById("tempDiv");
-        // Clears table div to show the current file
+        // Clears template div to show the current file
         temp.innerHTML = textTemplate;
-
-        
-
     };
     reader.readAsText(input);
-    
+
 });
 
 function csvToArray(str, delimiter = ",") {
