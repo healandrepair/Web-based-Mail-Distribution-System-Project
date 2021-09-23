@@ -11,21 +11,21 @@ var spreadSheet = '';
 //Name of lecturer
 var lecturer = '';
 
-function sendMail(){
+function sendMail() {
 
     for (const [email, template] of Object.entries(emails)) {
-    //Create and Post HttpRequest to SendMail.php
-      var httpr = new XMLHttpRequest();
-      var fd = new FormData();
-      fd.append("email", email);
-      fd.append("template", template);
-      httpr.onload = function(){
-        const serverResponse = document.getElementById("serverResponse");
-      }
-      httpr.open("POST", "sendMail.php");
-      httpr.send(fd);
+        //Create and Post HttpRequest to SendMail.php
+        var httpr = new XMLHttpRequest();
+        var fd = new FormData();
+        fd.append("email", email);
+        fd.append("template", template);
+        httpr.onload = function() {
+            const serverResponse = document.getElementById("serverResponse");
+        }
+        httpr.open("POST", "sendMail.php");
+        httpr.send(fd);
     }
-  }
+}
 
 // function sendData(){
 //     for (let i =0; i <csvValues.length;i++){
@@ -44,19 +44,18 @@ function sendMail(){
 //       httpr.send(fd);
 //     }
 // }
-  
 
-function mergeData(){
+
+function mergeData() {
     //someone work on this
-    for (let i =0; i <csvValues.length;i++){
+    for (let i = 0; i < csvValues.length; i++) {
         var email = textTemplate;
-        while (email.indexOf('[') != -1){
-            var remove = email.slice(email.indexOf('['),email.indexOf(']') + 1)
-            var header = email.slice(email.indexOf('[') + 1,email.indexOf(']'))
-            if (csvValues[i][header]){
-                email = email.replace(remove,csvValues[i][header]);
-            }
-            else{
+        while (email.indexOf('[') != -1) {
+            var remove = email.slice(email.indexOf('['), email.indexOf(']') + 1)
+            var header = email.slice(email.indexOf('[') + 1, email.indexOf(']'))
+            if (csvValues[i][header]) {
+                email = email.replace(remove, csvValues[i][header]);
+            } else {
                 email = email.replace(remove, "fix");
             }
         }
@@ -168,18 +167,31 @@ const showSend = () => {
 
 const myForm = document.getElementById("opener");
 const csvFile = document.getElementById("csvFile");
+const csvFileChosen = document.getElementById('csvFileChosen');
 const txtFile = document.getElementById("template");
+const templateChosen = document.getElementById('templateChosen');
 const lecturerInput = document.getElementById("lecturer");
 
-document.getElementById('txt').addEventListener('submit', function (e) {
+/*Read the name of CSV file*/
+csvFile.addEventListener('change', function() {
+    csvFileChosen.textContent = this.files[0].name
+})
+
+/*Read the name of email template*/
+txtFile.addEventListener('change', function() {
+    templateChosen.textContent = this.files[0].name
+})
+
+/*Read email template*/
+document.getElementById('txt').addEventListener('submit', function(e) {
     input = txtFile.files[0];
-    e.preventDefault();  
+    e.preventDefault();
     var reader = new FileReader();
     reader.onload = function(e) {
         textTemplate = e.target.result
     };
     reader.readAsText(input);
-  });
+});
 
 function csvToArray(str, delimiter = ",") {
     /* Array of headers */
@@ -228,57 +240,57 @@ function sortTable(n) {
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
-      // Start by saying: no switching is done:
-      switching = false;
-      rows = table.rows;
-      /* Loop through all table rows (except the
-      first, which contains table headers): */
-      for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-        shouldSwitch = false;
-        /* Get the two elements you want to compare,
-        one from current row and one from the next: */
-        x = rows[i].getElementsByTagName("TD")[n];
-        y = rows[i + 1].getElementsByTagName("TD")[n];
-        /* Check if the two rows should switch place,
-        based on the direction, asc or desc: */
-        if (dir == "asc") {
-          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (dir == "desc") {
-          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
+        // Start by saying: no switching is done:
+        switching = false;
+        rows = table.rows;
+        /* Loop through all table rows (except the
+        first, which contains table headers): */
+        for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+            one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /* Check if the two rows should switch place,
+            based on the direction, asc or desc: */
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
         }
-      }
-      if (shouldSwitch) {
-        /* If a switch has been marked, make the switch
-        and mark that a switch has been done: */
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        // Each time a switch is done, increase this count by 1:
-        switchcount ++;
-      } else {
-        /* If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again. */
-        if (switchcount == 0 && dir == "asc") {
-          dir = "desc";
-          switching = true;
+        if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount++;
+        } else {
+            /* If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again. */
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
         }
-      }
     }
-  }
+}
 
 myForm.addEventListener("submit", function(e) {
     e.preventDefault();
     const input = csvFile.files[0];
     const reader = new FileReader();
-    spreadSheet = csvFile.value.substring(csvFile.value.lastIndexOf("\\")+1);
+    spreadSheet = csvFile.value.substring(csvFile.value.lastIndexOf("\\") + 1);
     lecturer = lecturerInput.value;
 
     reader.onload = function(e) {
@@ -303,34 +315,29 @@ myForm.addEventListener("submit", function(e) {
             hcell.textContent = h;
         }
 
-    
-
-
-
         // Adds array values corresponding to the correct header to table
         for (arr of values) {
             table.insertRow();
-
             for (let i = 0; i < headers.length; i++) {
                 let vcell = table.rows[table.rows.length - 1].insertCell();
                 vcell.textContent = arr[headers[i]];
             }
         }
-        
+
         // Gets the email header cell
         let email = table.rows[0].cells[0];
         // Gets the PrefName header cell
         let name = table.rows[0].cells[1];
 
-        // Adds ability to sort by header cell
-        email.setAttribute('onclick','sortTable(0);');
+        // Adds ability to sort by header cell email with a mouse click
+        email.setAttribute('onclick', 'sortTable(0);');
         // Adds pointer cursor on hover
         email.setAttribute('style', 'cursor: pointer;');
         // Sets class to invert colors on highlight
         email.setAttribute('class', 'cellh');
-        
-        // Adds ability to sort by header cell
-        name.setAttribute('onclick','sortTable(1);');
+
+        // Adds ability to sort by header cell name with a mouse click
+        name.setAttribute('onclick', 'sortTable(1);');
         // Adds pointer cursor on hover
         name.setAttribute('style', 'cursor: pointer;');
         // Sets class to invert colors on highlight

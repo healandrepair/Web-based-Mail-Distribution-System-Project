@@ -20,6 +20,25 @@
         background-color: #f2f2f2;
         /* background-image: url("https://i.gifer.com/PHiR.gif"); */
     }
+    /*Upload file buttons*/
+    
+    span {
+        font-size: 12px;
+    }
+    
+    .fileBtn {
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        font-size: 12px;
+        padding: 1px 6px;
+        border: 1px solid gray;
+    }
+    
+    .fileBtn:hover {
+        background: lightgray;
+        color: black;
+    }
     /* Homepage heading */
     
     .center {
@@ -37,11 +56,11 @@
         margin-top: -50px;
         margin-left: -100px;
     }
-
     /* Cell invert on highlight */
+    
     .cellh:hover {
-        background:black;
-        color:white;
+        background: black;
+        color: white;
     }
     
     table {
@@ -54,8 +73,9 @@
     .tableDiv {
         border: 1px solid black;
         background-color: #f2f2f2;
-        height: 90%;
+        height: 60%;
         width: 90%;
+        /* Adds a scrollbar if the table is huge*/
         overflow: auto;
     }
     /* The sidebar menu */

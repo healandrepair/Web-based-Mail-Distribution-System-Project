@@ -9,7 +9,6 @@
     <div class="sidenav">
         <!--Why margin:auto, margin-left: auto, margin-right: auto, onclick-showHome() does not work for an image-->
         <img src="https://learningessentials.auckland.ac.nz/files/2019/09/UOA-VR-RGB.png" alt="uoa logo" onclick="showHome();" style="width:75%; margin: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto; cursor: pointer;">
-
         <a href="#" class="default">Log in</a>
         <a id="upbar" href="#" onclick="showUpload()" class="default">Upload</a>
         <a id="filebar" href="#" onclick="showFiles()" class="default">Files</a>
@@ -25,20 +24,31 @@
     <!--Upload page-->
     <div id="upload" class="main" style="display: none;">
         <h1>Upload</h1>
+        <!--CSV upload form-->
         <form id="opener">
             <input type="text" placeholder="lecturer" id="lecturer">
-            <br />
-            <input type="file" id="csvFile" accept=".csv" />
+            <br/>
+            <!-- actual csv upload button which is hidden -->
+            <input type="file" id="csvFile" accept=".csv" hidden />
+            <!-- custom upload button -->
+            <label class="fileBtn" for="csvFile">Choose CSV File</label>
+            <!-- name of CSV file chosen -->
+            <span id="csvFileChosen">No file chosen</span>
             <br />
             <input type="submit" value="Submit" />
         </form>
         <div id="tableDiv" class="tableDiv"></div>
+        <!--Template upload form-->
         <form id="txt">
-            <input type="file" id="template" accept=".txt" />
+            <!-- actual template upload button which is hidden -->
+            <input type="file" id="template" accept=".txt" hidden />
+            <!-- custom upload button -->
+            <label class="fileBtn" for="template">Choose Email Template</label>
+            <!-- name of template chosen -->
+            <span id="templateChosen">No file chosen</span>
             <br />
             <input type="submit" value="Submit" />
-            <input type="submit" value="Send to Database" onclick="sendData()"/>
-        
+            <input type="submit" value="Send to Database" onclick="sendData()" />
         </form>
     </div>
 
@@ -46,17 +56,15 @@
     <div id="files" class="main" style="display: none;">
         <h1>Files</h1>
         <div>
-          <div id = "csvDisplay" class = "csvDisplay"></div>
+            <div id="csvDisplay" class="csvDisplay"></div>
         </div>
         <input type="button" value="merge" onclick="mergeData()">
-    
     </div>
 
     <!--Send page-->
     <div id="send" class="main" style="display: none;">
         <h1>Send</h1>
         <input type="button" value="send" onclick="sendMail()">
-    
     </div>
-    <p id="serverResponse" style = "padding-left: 200px"></p>
+    <p id="serverResponse" style="padding-left: 200px"></p>
 </body>
