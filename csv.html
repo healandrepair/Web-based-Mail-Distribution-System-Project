@@ -18,12 +18,12 @@
     <!--Homepage-->
     <div id="home" class="main" style="display: block;">
         <h1 class="center">Team 13 G-Unit Feedback Sending Project</h1>
-        <img src="https://i.pinimg.com/originals/8f/f4/f3/8ff4f30b9e621b8879cf6eb0f6f4d519.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
+        <img src="https://data.whicdn.com/images/323598982/original.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
     </div>
 
     <!--Upload page-->
     <div id="upload" class="main" style="display: none;">
-        <h1>Upload</h1>
+        <h1>Upload and Send</h1>
         <!--CSV upload form-->
         <form id="opener">
             <input type="text" placeholder="lecturer" id="lecturer">
@@ -37,9 +37,9 @@
             <br />
             <input type="submit" value="Submit" />
         </form>
-        <div id="tableDiv" class="tableDiv"></div>
-        <!--Template upload form-->
-        <form id="txt">
+
+          <!--Template upload form-->
+          <form id="txt">
             <!-- actual template upload button which is hidden -->
             <input type="file" id="template" accept=".txt" hidden />
             <!-- custom upload button -->
@@ -49,7 +49,17 @@
             <br />
             <input type="submit" value="Submit" />
             <input type="submit" value="Send to Database" onclick="sendData()" />
+
+            <input type="button" value="Merge Data" onclick="mergeData()">
+            <input type="button" value="Send to Email" onclick="sendMail()">
         </form>
+
+
+        <div id="tableDiv" class="tableDiv"></div>
+        <div id="tempDiv" class="tempDiv"></div>
+
+        
+      
     </div>
 
     <!--Files page-->
@@ -58,13 +68,13 @@
         <div>
             <div id="csvDisplay" class="csvDisplay"></div>
         </div>
-        <input type="button" value="merge" onclick="mergeData()">
+        
     </div>
 
     <!--Send page-->
     <div id="send" class="main" style="display: none;">
         <h1>Send</h1>
-        <input type="button" value="send" onclick="sendMail()">
+        
     </div>
     <p id="serverResponse" style="padding-left: 200px"></p>
 </body>

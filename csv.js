@@ -188,9 +188,17 @@ document.getElementById('txt').addEventListener('submit', function(e) {
     e.preventDefault();
     var reader = new FileReader();
     reader.onload = function(e) {
-        textTemplate = e.target.result
+        textTemplate = e.target.result;
+
+        let temp = document.getElementById("tempDiv");
+        // Clears table div to show the current file
+        temp.innerHTML = textTemplate;
+
+        
+
     };
     reader.readAsText(input);
+    
 });
 
 function csvToArray(str, delimiter = ",") {
@@ -302,7 +310,7 @@ myForm.addEventListener("submit", function(e) {
         csvValues = data[1];
 
         // Create table
-        var main = document.getElementById("tableDiv");
+        let main = document.getElementById("tableDiv");
         let table = document.createElement('table');
         table.setAttribute("id", "dataTable");
 
