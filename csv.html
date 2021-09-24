@@ -48,14 +48,24 @@
             <span id="templateChosen">No file chosen</span>
             <br />
             <input type="submit" value="Submit" />
-            <input type="submit" value="Send to Database" onclick="sendData()" />
+            
 
-            <input type="button" value="Merge Data" onclick="mergeData()">
-            <input type="button" value="Send to Email" onclick="sendMail()">
         </form>
+        <div>
+        <input type="submit" style= "margin-bottom: 15px; display: block; width:120px" value="Send to Database" onclick="sendData()" />
+        <input type="button" style= "margin-bottom: 15px; display: block; width:120px" value="Merge Data" onclick="mergeData()">
+        <input type="button" style= "width:120px" value="Send to Email" onclick="sendMail()">
+
+       </div>
 
 
+        <div style="float: left; width:50%;"><h2>CSV Table</h2></div>
+
+        <div style="float: left; width:50%;"><h2>Text Template</h2></div>
+
+       
         <div id="tableDiv" class="tableDiv"></div>
+    
         <div id="tempDiv" class="tempDiv"></div>
 
         
