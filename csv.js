@@ -27,23 +27,25 @@ function sendMail() {
     }
 }
 
-// function sendData(){
-//     for (let i =0; i <csvValues.length;i++){
-//       var httpr = new XMLHttpRequest();
-//       var fd = new FormData();
-//       fd.append("lecturer", lecturer);
-//       fd.append("email", csvValues[i]["email"]);
-//       fd.append("column", columns);
-//       fd.append("spreadSheet",spreadSheet);
-//       fd.append("csvValues", JSON.stringify(csvValues[i]));
-//       httpr.onload = function(){
-//         const serverResponse = document.getElementById("serverResponse");
-//         serverResponse.innerHTML = this.responseText;
-//       }
-//       httpr.open("POST", "post.php");
-//       httpr.send(fd);
-//     }
-// }
+function sendData(){
+    for (let i =0; i <csvValues.length;i++){
+       for (const [column, value] of Object.entries(csvValues[i])) {
+           var httpr = new XMLHttpRequest();
+           var fd = new FormData();
+           fd.append("lecturer", lecturer);
+           fd.append("email", csvValues[i]["email"]);
+           fd.append("column", column);
+           fd.append("spreadSheet",spreadSheet);
+           fd.append("csvValues", value);
+           httpr.onload = function(){
+               const serverResponse = document.getElementById("serverResponse");
+               serverResponse.innerHTML = this.responseText;
+           }
+           httpr.open("POST", "post.php");
+           httpr.send(fd);
+       }
+   }
+}
 
 
 function mergeData() {
