@@ -10,15 +10,18 @@ var emails = {};
 var spreadSheet = '';
 //Name of lecturer
 var lecturer = '';
+//Subject Text
+var subjectText = '';
 
 function sendMail() {
 
     for (const [email, template] of Object.entries(emails)) {
-        //Create and Post HttpRequest to SendMail.php
+        //Create and Post AJAX HttpRequest to SendMail.php
         var httpr = new XMLHttpRequest();
         var fd = new FormData();
         fd.append("email", email);
         fd.append("template", template);
+        fd.append("subjectText", subjectText);
         httpr.onload = function() {
             const serverResponse = document.getElementById("serverResponse");
         }
@@ -52,6 +55,10 @@ function mergeData() {
     //loop through each dict obj containing CSV values of each student
     for (let i = 0; i < csvValues.length; i++) {
         var email = textTemplate;
+        //Get the subject text for the email and remove it from email template
+        var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
+        email = email.replace(subjectLine, '').trim();
+        subjectText = subjectLine.slice(subjectLine.indexOf(':') + 1).trim();
         while (email.indexOf('[') != -1) {
             var placeholderStr = email.slice(email.indexOf('['), email.indexOf(']') + 1);
             var header = email.slice(email.indexOf('[') + 1, email.indexOf(']'));
