@@ -10,6 +10,8 @@ var emails = {};
 var spreadSheet = '';
 //Name of lecturer
 var lecturer = '';
+//Subject Text
+var subjectText = '';
 
 var fromDB= '';
 
@@ -18,11 +20,12 @@ var data = '';
 function sendMail() {
 
     for (const [email, template] of Object.entries(emails)) {
-        //Create and Post HttpRequest to SendMail.php
+        //Create and Post AJAX HttpRequest to SendMail.php
         var httpr = new XMLHttpRequest();
         var fd = new FormData();
         fd.append("email", email);
         fd.append("template", template);
+        fd.append("subjectText", subjectText);
         httpr.onload = function() {
             const serverResponse = document.getElementById("serverResponse");
         }
@@ -115,7 +118,9 @@ function convertToObject() {
 
 function mergeData() {
     //loop through each dict obj containing CSV values of each student
+
     for (const [StudentEmail, StudentData] of Object.entries(data)) {
+
         var email = textTemplate;
         //Get the subject text for the email and remove it from email template
         var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
@@ -125,15 +130,19 @@ function mergeData() {
             var placeholderStr = email.slice(email.indexOf('['), email.indexOf(']') + 1);
             var header = email.slice(email.indexOf('[') + 1, email.indexOf(']'));
             //If the header string exists in the dict obj, then replace it with the actual data
+
             if (StudentData[header]) {
                 email = email.replace(placeholderStr, StudentData[header]);
+
             } else {
                 //If the header string contains the if condition
                 if (header.includes('ifNonNull')) {
                     //get the column to check the condition
                     header = header.slice(header.indexOf(':') + 1).trim();
                     //check whether the value is 0
+
                     value = StudentData[header];
+
                     if (value == '0') {
                         //remove all text that this condition applies to
                         var textToRemove = email.slice(email.indexOf('[ifNonNull'), email.indexOf('[endif]') + 7);
@@ -148,7 +157,9 @@ function mergeData() {
         emails[StudentEmail] = email
     }
     console.log("emails", emails)
+
     showData()
+
 }
 
 function showData() { // Shows the merged data
@@ -406,6 +417,7 @@ myForm.addEventListener("submit", function(e) {
         const values = data[1]
         columns = data[0];
         csvValues = data[1];
+        console.log("csvalues", csvValues);
 
         // Create table
         let main = document.getElementById("tableDiv");
