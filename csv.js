@@ -13,6 +13,10 @@ var lecturer = '';
 //Subject Text
 var subjectText = '';
 
+var fromDB= '';
+
+var data = '';
+
 function sendMail() {
 
     for (const [email, template] of Object.entries(emails)) {
@@ -30,30 +34,93 @@ function sendMail() {
     }
 }
 
-function sendData() {
-    for (let i = 0; i < csvValues.length; i++) {
-        for (const [column, value] of Object.entries(csvValues[i])) {
-            var httpr = new XMLHttpRequest();
-            var fd = new FormData();
-            fd.append("lecturer", lecturer);
-            fd.append("email", csvValues[i]["email"]);
-            fd.append("column", column);
-            fd.append("spreadSheet", spreadSheet);
-            fd.append("csvValues", value);
-            httpr.onload = function() {
-                const serverResponse = document.getElementById("serverResponse");
-                serverResponse.innerHTML = this.responseText;
-            }
-            httpr.open("POST", "post.php");
-            httpr.send(fd);
-        }
+
+function sendData(){
+    for (let i =0; i <csvValues.length;i++){
+       for (const [column, value] of Object.entries(csvValues[i])) {
+           var httpr = new XMLHttpRequest();
+           var fd = new FormData();
+           fd.append("lecturer", lecturer);
+           fd.append("email", csvValues[i]["email"]);
+           fd.append("column", column);
+           fd.append("spreadSheet",spreadSheet);
+           fd.append("csvValues", value);
+           httpr.onload = function(){
+               const serverResponse = document.getElementById("serverResponse");
+               serverResponse.innerHTML = this.responseText;
+           }
+           httpr.open("POST", "post.php");
+           httpr.send(fd);
+       }
+   }
+}
+
+function getData(){
+    var httpr = new XMLHttpRequest();
+    httpr.onload = function(){
+        const serverResponse = document.getElementById("serverResponse");
+        // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
+        fromDB = this.responseText;
+
     }
+    httpr.open("GET", `get.php?lecturer=${lecturer}`);
+    httpr.send();
+    
+    
+}
+
+async function submitGetLecturer() {
+    
+    lecturer = document.getElementById("lecturerGET").value;
+    getData();
+
 }
 
 
+function convertToObject() {
+
+
+    var arr = fromDB.split("\n")
+
+    var obj = {}
+  
+    for (i of arr) {
+        i = i.split(":")
+        if (i[1] === undefined) { // If value pair is somehow undefined
+            continue;
+        }
+        else {
+            temp_val = i[1].split("="); // split the key:value pair
+        }
+        
+        // console.log("temp",temp_val)
+        if (!(i[0] in obj)) { // If user is not defined yet
+            
+            temp_obj = {}
+            temp_obj[temp_val[0]] = temp_val[1];
+            obj[i[0]] = temp_obj
+        }
+        else { // If user is defined + add the values
+            temp = obj[i[0]]; // grab dict val
+            temp[temp_val[0]] = temp_val[1] //add values 
+            obj[i[0]] = temp // store back into value as key:value pair
+        }
+        
+        // console.log(i)
+        
+    }
+    console.log(obj)
+    data = obj //Stores the Object of Objects in data variable.
+    // document.getElementById("showdata").innerHTML = JSON.stringify(emails);
+    
+
+}
+
 function mergeData() {
     //loop through each dict obj containing CSV values of each student
-    for (let i = 0; i < csvValues.length; i++) {
+
+    for (const [StudentEmail, StudentData] of Object.entries(data)) {
+
         var email = textTemplate;
         //Get the subject text for the email and remove it from email template
         var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
@@ -63,15 +130,19 @@ function mergeData() {
             var placeholderStr = email.slice(email.indexOf('['), email.indexOf(']') + 1);
             var header = email.slice(email.indexOf('[') + 1, email.indexOf(']'));
             //If the header string exists in the dict obj, then replace it with the actual data
-            if (csvValues[i][header]) {
-                email = email.replace(placeholderStr, csvValues[i][header]);
+
+            if (StudentData[header]) {
+                email = email.replace(placeholderStr, StudentData[header]);
+
             } else {
                 //If the header string contains the if condition
                 if (header.includes('ifNonNull')) {
                     //get the column to check the condition
                     header = header.slice(header.indexOf(':') + 1).trim();
                     //check whether the value is 0
-                    value = csvValues[i][header];
+
+                    value = StudentData[header];
+
                     if (value == '0') {
                         //remove all text that this condition applies to
                         var textToRemove = email.slice(email.indexOf('[ifNonNull'), email.indexOf('[endif]') + 7);
@@ -83,10 +154,27 @@ function mergeData() {
                 }
             }
         }
-        emails[csvValues[i]['email']] = email
+        emails[StudentEmail] = email
     }
     console.log("emails", emails)
+
+    showData()
+
 }
+
+function showData() { // Shows the merged data
+    
+    tempStr = "";
+
+    for (const [key,val] of Object.entries(emails)) {
+
+        tempStr += val;
+
+    }
+    console.log(tempStr)
+    document.getElementById("showdata").innerText = tempStr;
+}
+
 
 /* Side bar elements */
 filebar = document.getElementById('filebar');

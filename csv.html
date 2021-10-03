@@ -60,6 +60,7 @@
         <input type="button" style= "margin-bottom: 15px; display: block; width:120px" value="Merge Data" onclick="mergeData()">
         <input type="button" style= "width:120px" value="Send to Email" onclick="sendMail()">
 
+
        </div>
 
 
@@ -72,6 +73,8 @@
     
         <div id="tempDiv" class="tempDiv"></div>
 
+
+
         
       
     </div>
@@ -79,9 +82,25 @@
     <!--Files page-->
     <div id="files" class="main" style="display: none;">
         <h1>Files</h1>
+        <form id="opener">
+            <label> Lecturer Name</label>
+            <input type="text" placeholder="Lecturer Name" id="lecturerGET"> 
+            <br/>
+            <input onclick="submitGetLecturer()" type="button" style="width:60px" value="Submit" />
+        </form>
+
+            <h2> Retrieve Data</h2>
+
+            <input onclick="convertToObject()" type="button" value="Load data"/>
+
+            <div id="tempDivBOX" class="tempDiv">
+                <p id="showdata"> </p>
+
+            </div>
+
         
-            
-            <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
+
+           <!-- <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;"> -->
         
         
     </div>
@@ -89,9 +108,15 @@
     <!--Send page-->
     <div id="send" class="main" style="display: none;">
         <h1>Send</h1>
+        
 
         <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
         
     </div>
     <p id="serverResponse" style="padding-left: 200px"></p>
+
+    <!-- <p id="serverResponseStore" style="padding-left: 200px"></p> -->
+
+    
+
 </body>
