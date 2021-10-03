@@ -27,43 +27,58 @@ function sendMail() {
     }
 }
 
-function sendData(){
-    for (let i =0; i <csvValues.length;i++){
-       for (const [column, value] of Object.entries(csvValues[i])) {
-           var httpr = new XMLHttpRequest();
-           var fd = new FormData();
-           fd.append("lecturer", lecturer);
-           fd.append("email", csvValues[i]["email"]);
-           fd.append("column", column);
-           fd.append("spreadSheet",spreadSheet);
-           fd.append("csvValues", value);
-           httpr.onload = function(){
-               const serverResponse = document.getElementById("serverResponse");
-               serverResponse.innerHTML = this.responseText;
-           }
-           httpr.open("POST", "post.php");
-           httpr.send(fd);
-       }
-   }
+function sendData() {
+    for (let i = 0; i < csvValues.length; i++) {
+        for (const [column, value] of Object.entries(csvValues[i])) {
+            var httpr = new XMLHttpRequest();
+            var fd = new FormData();
+            fd.append("lecturer", lecturer);
+            fd.append("email", csvValues[i]["email"]);
+            fd.append("column", column);
+            fd.append("spreadSheet", spreadSheet);
+            fd.append("csvValues", value);
+            httpr.onload = function() {
+                const serverResponse = document.getElementById("serverResponse");
+                serverResponse.innerHTML = this.responseText;
+            }
+            httpr.open("POST", "post.php");
+            httpr.send(fd);
+        }
+    }
 }
 
 
 function mergeData() {
-    //someone work on this
+    //loop through each dict obj containing CSV values of each student
     for (let i = 0; i < csvValues.length; i++) {
         var email = textTemplate;
         while (email.indexOf('[') != -1) {
-            var remove = email.slice(email.indexOf('['), email.indexOf(']') + 1)
-            var header = email.slice(email.indexOf('[') + 1, email.indexOf(']'))
+            var placeholderStr = email.slice(email.indexOf('['), email.indexOf(']') + 1);
+            var header = email.slice(email.indexOf('[') + 1, email.indexOf(']'));
+            //If the header string exists in the dict obj, then replace it with the actual data
             if (csvValues[i][header]) {
-                email = email.replace(remove, csvValues[i][header]);
+                email = email.replace(placeholderStr, csvValues[i][header]);
             } else {
-                email = email.replace(remove, "fix");
+                //If the header string contains the if condition
+                if (header.includes('ifNonNull')) {
+                    //get the column to check the condition
+                    header = header.slice(header.indexOf(':') + 1).trim();
+                    //check whether the value is 0
+                    value = csvValues[i][header];
+                    if (value == '0') {
+                        //remove all text that this condition applies to
+                        var textToRemove = email.slice(email.indexOf('[ifNonNull'), email.indexOf('[endif]') + 7);
+                        email = email.replace(textToRemove, '');
+                    } else {
+                        email = email.replace(placeholderStr, '');
+                        email = email.replace('[endif]', '');
+                    }
+                }
             }
         }
         emails[csvValues[i]['email']] = email
     }
-    console.log(emails)
+    console.log("emails", emails)
 }
 
 /* Side bar elements */
@@ -307,6 +322,7 @@ myForm.addEventListener("submit", function(e) {
         const values = data[1]
         columns = data[0];
         csvValues = data[1];
+        console.log("csvalues", csvValues);
 
         // Create table
         let main = document.getElementById("tableDiv");
