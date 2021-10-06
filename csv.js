@@ -13,9 +13,12 @@ var lecturer = '';
 //Subject Text
 var subjectText = '';
 
-var fromDB= '';
+var fromDB = '';
 
 var data = '';
+
+// login or not
+var isLogin = false;
 
 function sendMail() {
 
@@ -35,29 +38,29 @@ function sendMail() {
 }
 
 
-function sendData(){
-    for (let i =0; i <csvValues.length;i++){
-       for (const [column, value] of Object.entries(csvValues[i])) {
-           var httpr = new XMLHttpRequest();
-           var fd = new FormData();
-           fd.append("lecturer", lecturer);
-           fd.append("email", csvValues[i]["email"]);
-           fd.append("column", column);
-           fd.append("spreadSheet",spreadSheet);
-           fd.append("csvValues", value);
-           httpr.onload = function(){
-               const serverResponse = document.getElementById("serverResponse");
-               serverResponse.innerHTML = this.responseText;
-           }
-           httpr.open("POST", "post.php");
-           httpr.send(fd);
-       }
-   }
+function sendData() {
+    for (let i = 0; i < csvValues.length; i++) {
+        for (const [column, value] of Object.entries(csvValues[i])) {
+            var httpr = new XMLHttpRequest();
+            var fd = new FormData();
+            fd.append("lecturer", lecturer);
+            fd.append("email", csvValues[i]["email"]);
+            fd.append("column", column);
+            fd.append("spreadSheet", spreadSheet);
+            fd.append("csvValues", value);
+            httpr.onload = function() {
+                const serverResponse = document.getElementById("serverResponse");
+                serverResponse.innerHTML = this.responseText;
+            }
+            httpr.open("POST", "post.php");
+            httpr.send(fd);
+        }
+    }
 }
 
-function getData(){
+function getData() {
     var httpr = new XMLHttpRequest();
-    httpr.onload = function(){
+    httpr.onload = function() {
         const serverResponse = document.getElementById("serverResponse");
         // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
         fromDB = this.responseText;
@@ -65,12 +68,12 @@ function getData(){
     }
     httpr.open("GET", `get.php?lecturer=${lecturer}`);
     httpr.send();
-    
-    
+
+
 }
 
 async function submitGetLecturer() {
-    
+
     lecturer = document.getElementById("lecturerGET").value;
     getData();
 
@@ -83,36 +86,34 @@ function convertToObject() {
     var arr = fromDB.split("\n")
 
     var obj = {}
-  
+
     for (i of arr) {
         i = i.split(":")
         if (i[1] === undefined) { // If value pair is somehow undefined
             continue;
-        }
-        else {
+        } else {
             temp_val = i[1].split("="); // split the key:value pair
         }
-        
+
         // console.log("temp",temp_val)
         if (!(i[0] in obj)) { // If user is not defined yet
-            
+
             temp_obj = {}
             temp_obj[temp_val[0]] = temp_val[1];
             obj[i[0]] = temp_obj
-        }
-        else { // If user is defined + add the values
+        } else { // If user is defined + add the values
             temp = obj[i[0]]; // grab dict val
             temp[temp_val[0]] = temp_val[1] //add values 
             obj[i[0]] = temp // store back into value as key:value pair
         }
-        
+
         // console.log(i)
-        
+
     }
     console.log(obj)
     data = obj //Stores the Object of Objects in data variable.
-    // document.getElementById("showdata").innerHTML = JSON.stringify(emails);
-    
+        // document.getElementById("showdata").innerHTML = JSON.stringify(emails);
+
 
 }
 
@@ -163,10 +164,10 @@ function mergeData() {
 }
 
 function showData() { // Shows the merged data
-    
+
     tempStr = "";
 
-    for (const [key,val] of Object.entries(emails)) {
+    for (const [key, val] of Object.entries(emails)) {
 
         tempStr += val;
 
@@ -180,6 +181,15 @@ function showData() { // Shows the merged data
 filebar = document.getElementById('filebar');
 sendbar = document.getElementById('sendbar');
 upbar = document.getElementById('upbar');
+loginbar = document.getElementById('loginbar');
+loginPage = document.getElementById('login');
+signOutbar = document.getElementById('signOutbar');
+
+loginbar.style.display = "block";
+filebar.style.display = "none";
+sendbar.style.display = "none";
+upbar.style.display = "none";
+signOutbar.style.display = "none";
 
 // Shows Home div
 const showHome = () => {
@@ -187,6 +197,8 @@ const showHome = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('files').style.display = 'none'
     document.getElementById('send').style.display = 'none'
+    document.getElementById('login').style.display = 'none'
+
 
     /* None of the menu bar elements is selected*/
     if (filebar.classList.contains('current')) {
@@ -203,6 +215,10 @@ const showHome = () => {
         upbar.classList.remove('current');
         upbar.classList.add('default');
     }
+    if (loginbar.classList.contains('current')) {
+        loginbar.classList.remove('current');
+        loginbar.classList.add('default');
+    }
 }
 
 // Shows Upload div
@@ -211,6 +227,7 @@ const showUpload = () => {
     document.getElementById('home').style.display = 'none'
     document.getElementById('files').style.display = 'none'
     document.getElementById('send').style.display = 'none'
+    document.getElementById('login').style.display = 'none'
 
     if (filebar.classList.contains('current')) {
         filebar.classList.remove('current');
@@ -226,6 +243,10 @@ const showUpload = () => {
         upbar.classList.remove('default');
         upbar.classList.add('current');
     }
+    if (loginbar.classList.contains('current')) {
+        loginbar.classList.remove('current');
+        loginbar.classList.add('default');
+    }
 }
 
 // Shows File div
@@ -234,6 +255,7 @@ const showFiles = () => {
     document.getElementById('home').style.display = 'none'
     document.getElementById('files').style.display = 'block'
     document.getElementById('send').style.display = 'none'
+    document.getElementById('login').style.display = 'none'
 
 
     if (filebar.classList.contains('default')) {
@@ -250,6 +272,10 @@ const showFiles = () => {
         upbar.classList.remove('current');
         upbar.classList.add('default');
     }
+    if (loginbar.classList.contains('current')) {
+        loginbar.classList.remove('current');
+        loginbar.classList.add('default');
+    }
 }
 
 // Shows Send div
@@ -258,6 +284,7 @@ const showSend = () => {
     document.getElementById('home').style.display = 'none'
     document.getElementById('files').style.display = 'none'
     document.getElementById('send').style.display = 'block'
+    document.getElementById('login').style.display = 'none'
 
 
     if (filebar.classList.contains('current')) {
@@ -274,8 +301,39 @@ const showSend = () => {
         upbar.classList.remove('current');
         upbar.classList.add('default');
     }
+    if (loginbar.classList.contains('current')) {
+        loginbar.classList.remove('current');
+        loginbar.classList.add('default');
+    }
 }
 
+const showLogin = () => {
+    document.getElementById('upload').style.display = 'none'
+    document.getElementById('home').style.display = 'none'
+    document.getElementById('files').style.display = 'none'
+    document.getElementById('send').style.display = 'none'
+    document.getElementById('login').style.display = 'block'
+
+
+    if (filebar.classList.contains('current')) {
+        filebar.classList.remove('current');
+        filebar.classList.add('default');
+    }
+
+    if (sendbar.classList.contains('current')) {
+        sendbar.classList.remove('current');
+        sendbar.classList.add('default');
+    }
+
+    if (upbar.classList.contains('current')) {
+        upbar.classList.remove('current');
+        upbar.classList.add('default');
+    }
+    if (loginbar.classList.contains('default')) {
+        loginbar.classList.remove('default');
+        loginbar.classList.add('current');
+    }
+}
 
 const myForm = document.getElementById("opener");
 const csvFile = document.getElementById("csvFile");
@@ -470,6 +528,48 @@ myForm.addEventListener("submit", function(e) {
     reader.readAsText(input);
 })
 
+// Login stuff
+function onSignIn(googleUser) {
+    // Useful data for your client-side scripts:
+    var profile = googleUser.getBasicProfile();
+    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+    console.log('Full Name: ' + profile.getName());
+    console.log('Given Name: ' + profile.getGivenName());
+    console.log('Family Name: ' + profile.getFamilyName());
+    console.log("Image URL: " + profile.getImageUrl());
+    console.log("Email: " + profile.getEmail());
 
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token: " + id_token);
+    if (id_token !== undefined && id_token !== '' && id_token !== null) {
+        isLogin = true;
+        loginbar.style.display = "none";
+        loginPage.style.display = "none";
+        filebar.style.display = "block";
+        sendbar.style.display = "block";
+        upbar.style.display = "block";
+        signOutbar.style.display = "block";
+        showUpload();
+        document.querySelector('#content').innerText = "Hello! " + googleUser.getBasicProfile().getGivenName();
+    }
+}
+
+// Sign out 
+function signOut() {
+    gapi.auth2.getAuthInstance().signOut().then(function() {
+        console.log('user signed out')
+        isLogin = false;
+        loginbar.style.display = "block";
+        loginPage.style.display = "block";
+        filebar.style.display = "none";
+        sendbar.style.display = "none";
+        upbar.style.display = "none";
+        loginPage.style.display = "block";
+        showHome();
+        signOutbar.style.display = "none";
+        document.querySelector('#content').innerText = " ";
+    })
+};
 
 ;

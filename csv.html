@@ -5,24 +5,38 @@
 </head>
 
 <body>
+
+    <!-- show username -->
+    <div id="content" style="display: block; position: fixed; right: 0; top: 0;">
+    </div>
+
     <!--Side navigation bar-->
     <div class="sidenav">
         <!--Why margin:auto, margin-left: auto, margin-right: auto, onclick-showHome() does not work for an image-->
         <img src="https://learningessentials.auckland.ac.nz/files/2019/09/UOA-VR-RGB.png" alt="uoa logo" onclick="showHome();" style="width:75%; margin: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto; cursor: pointer;">
-        <a href="#" class="default">Log in</a>
+        <a id="loginbar" href="#" onclick="showLogin()" class="default">Log in</a>
         <a id="upbar" href="#" onclick="showUpload()" class="default">Upload</a>
         <a id="filebar" href="#" onclick="showFiles()" class="default">Files</a>
         <a id="sendbar" href="#" onclick="showSend()" class="default">Send</a>
+        <a id="signOutbar" href="#" onclick="signOut()" class="default">Sign out</a>
     </div>
 
     <!--Homepage-->
     <div id="home" class="main" style="display: block;">
         <h1 class="center">Team 13 G-Unit Feedback Sending Project</h1>
         <img src="https://data.whicdn.com/images/323598982/original.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
+    </div>
 
-        
+    <!-- Login page -->
+    <div id="login" style="display:none;">
+        <meta name="google-signin-scope" content="profile email">
+        <meta name="google-signin-client_id" content="875579755570-mn038vuiob9jshos6n4u8a3sq7o7pg2r.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <h1 style="margin-left: 200px;">login test</h1>
+        <div style="margin-left: 200px;" class="g-signin2" data-onsuccess="onSignIn">
 
-        
+        </div>
+
     </div>
 
     <!--Upload page-->
@@ -42,41 +56,45 @@
             <input type="submit" style="width:60px" value="Submit" />
         </form>
 
-          <!--Template upload form-->
-          <form id="txt">
+        <!--Template upload form-->
+        <form id="txt">
             <!-- actual template upload button which is hidden -->
             <input type="file" id="template" accept=".txt" hidden />
             <!-- custom upload button -->
-            <label class="fileBtn"  for="template">Choose Email Template</label>
+            <label class="fileBtn" for="template">Choose Email Template</label>
             <!-- name of template chosen -->
             <span id="templateChosen">No file chosen</span>
             <br />
             <input type="submit" style="width:60px" value="Submit" />
-            
+
 
         </form>
         <div>
-        <input type="submit" style= "margin-bottom: 15px; display: block; width:120px" value="Send to Database" onclick="sendData()" />
-        <input type="button" style= "margin-bottom: 15px; display: block; width:120px" value="Merge Data" onclick="mergeData()">
-        <input type="button" style= "width:120px" value="Send to Email" onclick="sendMail()">
+            <input type="submit" style="margin-bottom: 15px; display: block; width:120px" value="Send to Database" onclick="sendData()" />
+            <input type="button" style="margin-bottom: 15px; display: block; width:120px" value="Merge Data" onclick="mergeData()">
+            <input type="button" style="width:120px" value="Send to Email" onclick="sendMail()">
 
 
-       </div>
+        </div>
 
 
-        <div style="float: left; width:50%;"><h2>CSV Table</h2></div>
+        <div style="float: left; width:50%;">
+            <h2>CSV Table</h2>
+        </div>
 
-        <div style="float: left; width:50%;"><h2>Text Template</h2></div>
+        <div style="float: left; width:50%;">
+            <h2>Text Template</h2>
+        </div>
 
-       
+
         <div id="tableDiv" class="tableDiv"></div>
-    
+
         <div id="tempDiv" class="tempDiv"></div>
 
 
 
-        
-      
+
+
     </div>
 
     <!--Files page-->
@@ -84,39 +102,39 @@
         <h1>Files</h1>
         <form id="opener">
             <label> Lecturer Name</label>
-            <input type="text" placeholder="Lecturer Name" id="lecturerGET"> 
+            <input type="text" placeholder="Lecturer Name" id="lecturerGET">
             <br/>
             <input onclick="submitGetLecturer()" type="button" style="width:60px" value="Submit" />
         </form>
 
-            <h2> Retrieve Data</h2>
+        <h2> Retrieve Data</h2>
 
-            <input onclick="convertToObject()" type="button" value="Load data"/>
+        <input onclick="convertToObject()" type="button" value="Load data" />
 
-            <div id="tempDivBOX" class="tempDiv">
-                <p id="showdata"> </p>
+        <div id="tempDivBOX" class="tempDiv">
+            <p id="showdata"> </p>
 
-            </div>
+        </div>
 
-        
 
-           <!-- <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;"> -->
-        
-        
+
+        <!-- <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;"> -->
+
+
     </div>
 
     <!--Send page-->
     <div id="send" class="main" style="display: none;">
         <h1>Send</h1>
-        
+
 
         <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
-        
+
     </div>
     <p id="serverResponse" style="padding-left: 200px"></p>
 
     <!-- <p id="serverResponseStore" style="padding-left: 200px"></p> -->
 
-    
+
 
 </body>
