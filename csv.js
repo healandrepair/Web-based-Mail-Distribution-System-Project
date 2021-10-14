@@ -17,11 +17,7 @@ var fromDB = '';
 
 var data = '';
 
-// login or not
-var isLogin = false;
-
 function sendMail() {
-
     for (const [email, template] of Object.entries(emails)) {
         //Create and Post AJAX HttpRequest to SendMail.php
         var httpr = new XMLHttpRequest();
@@ -64,29 +60,20 @@ function getData() {
         const serverResponse = document.getElementById("serverResponse");
         // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
         fromDB = this.responseText;
-
     }
     httpr.open("GET", `get.php?lecturer=${lecturer}`);
     httpr.send();
-
-
 }
 
 async function submitGetLecturer() {
-
     lecturer = document.getElementById("lecturerGET").value;
     getData();
-
 }
 
 
 function convertToObject() {
-
-
     var arr = fromDB.split("\n")
-
     var obj = {}
-
     for (i of arr) {
         i = i.split(":")
         if (i[1] === undefined) { // If value pair is somehow undefined
@@ -119,9 +106,7 @@ function convertToObject() {
 
 function mergeData() {
     //loop through each dict obj containing CSV values of each student
-
     for (const [StudentEmail, StudentData] of Object.entries(data)) {
-
         var email = textTemplate;
         //Get the subject text for the email and remove it from email template
         var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
@@ -164,13 +149,9 @@ function mergeData() {
 }
 
 function showData() { // Shows the merged data
-
     tempStr = "";
-
     for (const [key, val] of Object.entries(emails)) {
-
         tempStr += val;
-
     }
     console.log(tempStr)
     document.getElementById("showdata").innerText = tempStr;
@@ -185,11 +166,6 @@ loginbar = document.getElementById('loginbar');
 loginPage = document.getElementById('login');
 signOutbar = document.getElementById('signOutbar');
 
-loginbar.style.display = "block";
-filebar.style.display = "none";
-sendbar.style.display = "none";
-upbar.style.display = "none";
-signOutbar.style.display = "none";
 
 // Shows Home div
 const showHome = () => {
@@ -307,6 +283,7 @@ const showSend = () => {
     }
 }
 
+//Shows Login div
 const showLogin = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
@@ -542,32 +519,27 @@ function onSignIn(googleUser) {
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+    //Once logged in - show the other side nav items & upload page
     if (id_token !== undefined && id_token !== '' && id_token !== null) {
-        isLogin = true;
+        showUpload();
         loginbar.style.display = "none";
-        loginPage.style.display = "none";
         filebar.style.display = "block";
         sendbar.style.display = "block";
         upbar.style.display = "block";
         signOutbar.style.display = "block";
-        showUpload();
-        document.querySelector('#content').innerText = "Hello! " + googleUser.getBasicProfile().getGivenName();
+        //greet user on the website
+        document.querySelector('#content').innerText = "Hello " + profile.getGivenName() + "!";
     }
 }
 
 // Sign out 
 function signOut() {
-    gapi.auth2.getAuthInstance().signOut().then(function() {
-        console.log('user signed out')
-        isLogin = false;
-        loginbar.style.display = "block";
-        loginPage.style.display = "block";
-        filebar.style.display = "none";
-        sendbar.style.display = "none";
-        upbar.style.display = "none";
-        loginPage.style.display = "block";
-        showHome();
-        signOutbar.style.display = "none";
+    var auth = gapi.auth2.getAuthInstance();
+    auth.signOut().then(function() {
+        //Button should say "Sign in" instead of "Signed in"
+        auth.disconnect();
+        document.location.href = "http://localhost/Web-based-Mail-Distribution-System-Project/csv.html";
+        console.log('user signed out');
         document.querySelector('#content').innerText = " ";
     })
 };
