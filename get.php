@@ -1,11 +1,27 @@
 <?php
+function checker($s)
+/* checks lecturer name to prevent sql injection */
+{
+  $result = array();
+  foreach(str_split($s) as $ch)
+    {
+      if ($ch == "\\" || $ch == "%" || $ch == "_" || $ch == "=" || $ch == "'")
+        {
+          $result[] = "\\";
+        } 
+      $result[] = $ch;
+    } 
+  return
+      implode("", $result);
+} 
 
 $username = 'root';
 $password = 'team13';
 $dbName = 'csvData';
 $dbHost = "35.201.5.115";
 
-$lecturer =$_GET["lecturer"];
+$lecturer1 =$_GET["lecturer"];
+$lecturer=checker($lecturer1);
 $conn = mysqli_connect($dbHost, $username, $password,$dbName);
 $sql = "SELECT * FROM csvData.CSVTable Where Lecturer = '$lecturer'" ;
 $result = mysqli_query($conn,$sql) or die("Error " . mysqli_error($conn));
