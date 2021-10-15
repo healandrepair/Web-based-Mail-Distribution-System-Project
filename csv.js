@@ -12,11 +12,28 @@ var spreadSheet = '';
 var lecturer = '';
 //Subject Text
 var subjectText = '';
-
-var fromDB = '';
-
+//Database data text 
+var dbData = '';
+//Dict obj containing the student & their data
 var data = '';
 
+//CSV & template elements from the form
+const myForm = document.getElementById("opener");
+const csvFile = document.getElementById("csvFile");
+const csvFileChosen = document.getElementById('csvFileChosen');
+const txtFile = document.getElementById("template");
+const templateChosen = document.getElementById('templateChosen');
+
+//Side bar elements
+filebar = document.getElementById('filebar');
+sendbar = document.getElementById('sendbar');
+upbar = document.getElementById('upbar');
+loginbar = document.getElementById('loginbar');
+loginPage = document.getElementById('login');
+signOutbar = document.getElementById('signOutbar');
+
+
+/* Sends emails via a POST request */
 function sendMail() {
     for (const [email, template] of Object.entries(emails)) {
         //Create and Post AJAX HttpRequest to SendMail.php
@@ -33,7 +50,7 @@ function sendMail() {
     }
 }
 
-
+/* Sends data to the database via a POST request */
 function sendData() {
     for (let i = 0; i < csvValues.length; i++) {
         for (const [column, value] of Object.entries(csvValues[i])) {
@@ -45,6 +62,7 @@ function sendData() {
             fd.append("spreadSheet", spreadSheet);
             fd.append("csvValues", value);
             httpr.onload = function() {
+                //Testing purposes
                 const serverResponse = document.getElementById("serverResponse");
                 serverResponse.innerHTML = this.responseText;
             }
@@ -54,28 +72,24 @@ function sendData() {
     }
 }
 
-function getData() { // GET request to database
+/* Retrieves data from the database via a GET request */
+function getData() {
     var httpr = new XMLHttpRequest();
     httpr.onload = function() {
         const serverResponse = document.getElementById("serverResponse");
         // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
-        fromDB = this.responseText;
-        convertToObject(); // calls function to convert data from database
-
+        dbData = this.responseText;
+        console.log("fromDB", dbData);
+        // calls function to convert data from database to obj
+        convertToObject();
     }
     httpr.open("GET", `get.php?lecturer=${lecturer}`);
     httpr.send();
 }
 
-// async function submitGetLecturer() {
-//     lecturer = document.getElementById("lecturerGET").value;
-//     getData();
-// }
-
-
-function convertToObject() { // converts retrieved data from database to object.
-
-    var arr = fromDB.split("\n")
+/* Converts retrieved data from database to object type.*/
+function convertToObject() {
+    var arr = dbData.split("\n");
     var obj = {}
     for (i of arr) {
         i = i.split(":")
@@ -84,34 +98,28 @@ function convertToObject() { // converts retrieved data from database to object.
         } else {
             temp_val = i[1].split("="); // split the key:value pair
         }
-
         // console.log("temp",temp_val)
-        if (!(i[0] in obj)) { // If user is not defined yet
-
+        if (!(i[0] in obj)) { // If student is not in obj yet
             temp_obj = {}
             temp_obj[temp_val[0]] = temp_val[1];
             obj[i[0]] = temp_obj
-        } else { // If user is defined + add the values
-            temp = obj[i[0]]; // grab dict val
-            temp[temp_val[0]] = temp_val[1] //add values 
+        } else { // If student is defined + add the values
+            temp = obj[i[0]]; // grab dict val of that student
+            temp[temp_val[0]] = temp_val[1] //add new key value pair 
             obj[i[0]] = temp // store back into value as key:value pair
         }
-
         // console.log(i)
-
     }
-    console.log(obj)
-    data = obj //Stores the Object of Objects in data variable.
-        // document.getElementById("showdata").innerHTML = JSON.stringify(emails);
-
-
+    console.log("obj", obj);
+    data = obj; //Stores the Object of Objects in data variable.
 }
 
+/* Merges retrieved data from database with email template.*/
 function mergeData() {
     //loop through each dict obj containing CSV values of each student
     for (const [StudentEmail, StudentData] of Object.entries(data)) {
         var email = textTemplate;
-        //Get the subject text for the email and remove it from email template
+        //get the subject text for the email and remove it from email template
         var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
         email = email.replace(subjectLine, '').trim();
         subjectText = subjectLine.slice(subjectLine.indexOf(':') + 1).trim();
@@ -119,19 +127,15 @@ function mergeData() {
             var placeholderStr = email.slice(email.indexOf('['), email.indexOf(']') + 1);
             var header = email.slice(email.indexOf('[') + 1, email.indexOf(']'));
             //If the header string exists in the dict obj, then replace it with the actual data
-
             if (StudentData[header]) {
                 email = email.replace(placeholderStr, StudentData[header]);
-
             } else {
                 //If the header string contains the if condition
                 if (header.includes('ifNonNull')) {
                     //get the column to check the condition
                     header = header.slice(header.indexOf(':') + 1).trim();
                     //check whether the value is 0
-
                     value = StudentData[header];
-
                     if (value == '0') {
                         //remove all text that this condition applies to
                         var textToRemove = email.slice(email.indexOf('[ifNonNull'), email.indexOf('[endif]') + 7);
@@ -143,36 +147,28 @@ function mergeData() {
                 }
             }
         }
-        email  += '\n\n------------\n\n'
+        //adds newline chars at the end of each student's email content
+        email += '\n\n------------\n\n'
         emails[StudentEmail] = email
     }
-    console.log("emails", emails)
+    console.log("emails", emails);
 
-    showData()
+    showData();
 
 }
 
-function showData() { // Shows the merged data
+/* Shows the merged data in the div */
+function showData() {
     tempStr = "";
     for (const [key, val] of Object.entries(emails)) {
         tempStr += val;
     }
-    tempStr += "\n";  // adds newline char at the end of each block
+    tempStr += "\n"; // adds newline char at the end of each block
     console.log(tempStr)
     document.getElementById("showdata").innerText = tempStr;
 }
 
-
-/* Side bar elements */
-filebar = document.getElementById('filebar');
-sendbar = document.getElementById('sendbar');
-upbar = document.getElementById('upbar');
-loginbar = document.getElementById('loginbar');
-loginPage = document.getElementById('login');
-signOutbar = document.getElementById('signOutbar');
-
-
-// Shows Home div
+/* Shows Home div */
 const showHome = () => {
     document.getElementById('home').style.display = 'block'
     document.getElementById('upload').style.display = 'none'
@@ -181,7 +177,7 @@ const showHome = () => {
     document.getElementById('login').style.display = 'none'
 
 
-    /* None of the menu bar elements is selected*/
+    //None of the menu bar elements is selected
     if (filebar.classList.contains('current')) {
         filebar.classList.remove('current');
         filebar.classList.add('default');
@@ -202,7 +198,7 @@ const showHome = () => {
     }
 }
 
-// Shows Upload div
+/* Shows Upload div */
 const showUpload = () => {
     document.getElementById('upload').style.display = 'block'
     document.getElementById('home').style.display = 'none'
@@ -230,7 +226,7 @@ const showUpload = () => {
     }
 }
 
-// Shows File div
+/* Shows Files div */
 const showFiles = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
@@ -259,7 +255,7 @@ const showFiles = () => {
     }
 }
 
-// Shows Send div
+/* Shows Send div */
 const showSend = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
@@ -288,7 +284,7 @@ const showSend = () => {
     }
 }
 
-//Shows Login div
+/* Shows Login div */
 const showLogin = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
@@ -317,31 +313,25 @@ const showLogin = () => {
     }
 }
 
-const myForm = document.getElementById("opener");
-const csvFile = document.getElementById("csvFile");
-const csvFileChosen = document.getElementById('csvFileChosen');
-const txtFile = document.getElementById("template");
-const templateChosen = document.getElementById('templateChosen');
-const lecturerInput = document.getElementById("lecturer");
 
-/*Read the name of CSV file*/
+/* Read the name of CSV file */
 csvFile.addEventListener('change', function() {
     csvFileChosen.textContent = this.files[0].name
 })
 
-/*Read the name of email template*/
+/* Read the name of email template */
 txtFile.addEventListener('change', function() {
     templateChosen.textContent = this.files[0].name
 })
 
-/*Read email template*/
+/* Read email template */
 document.getElementById('txt').addEventListener('submit', function(e) {
     input = txtFile.files[0];
     e.preventDefault();
     var reader = new FileReader();
     reader.onload = function(e) {
         textTemplate = e.target.result;
-        
+
         textTemplate = textTemplate.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // Stops potential html injection
 
         let temp = document.getElementById("tempDiv");
@@ -349,9 +339,9 @@ document.getElementById('txt').addEventListener('submit', function(e) {
         temp.innerHTML = textTemplate;
     };
     reader.readAsText(input);
-
 });
 
+/* Stores the CSV file content into an array */
 function csvToArray(str, delimiter = ",") {
     /* Array of headers */
     // slice from start of text to the first \n index
@@ -389,8 +379,8 @@ function csvToArray(str, delimiter = ",") {
     return farray;
 }
 
-// Function to sort table column by index
-// Modified from https://www.w3schools.com/howto/howto_js_sort_table.asp
+/* Function to sort table column by index 
+Modified from https: //www.w3schools.com/howto/howto_js_sort_table.asp */
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("dataTable");
@@ -446,12 +436,12 @@ function sortTable(n) {
     }
 }
 
+/* Read the CSV file & create the CSV table */
 myForm.addEventListener("submit", function(e) {
     e.preventDefault();
     const input = csvFile.files[0];
     const reader = new FileReader();
     spreadSheet = csvFile.value.substring(csvFile.value.lastIndexOf("\\") + 1);
-
 
     reader.onload = function(e) {
         const text = e.target.result;
@@ -513,11 +503,11 @@ myForm.addEventListener("submit", function(e) {
     reader.readAsText(input);
 })
 
-// Login stuff
+/* Login stuff */
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
-    lecturer = googleUser.getBasicProfile().getGivenName()
+    lecturer = profile.getGivenName();
 
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
@@ -538,11 +528,11 @@ function onSignIn(googleUser) {
         upbar.style.display = "block";
         signOutbar.style.display = "block";
         //greet user on the website
-        document.querySelector('#content').innerText = "Hello " + profile.getGivenName() + "!";
+        document.querySelector('#content').innerText = "Hello " + lecturer + "!";
     }
 }
 
-// Sign out 
+/* Sign out */
 function signOut() {
     var auth = gapi.auth2.getAuthInstance();
     auth.signOut().then(function() {
@@ -553,5 +543,3 @@ function signOut() {
         document.querySelector('#content').innerText = " ";
     })
 };
-
-;

@@ -9,7 +9,6 @@ $email = $_POST['email'];
 $template = $_POST['template'];
 $subjectText = $_POST['subjectText'];
 
-//
 $mail = new PHPMailer(true);
 
 //Simple Mail Transfer Protocol (SMTP)
