@@ -336,6 +336,9 @@ document.getElementById('txt').addEventListener('submit', function(e) {
     var reader = new FileReader();
     reader.onload = function(e) {
         textTemplate = e.target.result;
+        
+        textTemplate = textTemplate.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
         let temp = document.getElementById("tempDiv");
         // Clears template div to show the current file
         temp.innerHTML = textTemplate;
