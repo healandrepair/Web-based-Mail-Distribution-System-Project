@@ -30,8 +30,7 @@
         <h1>Upload and Send</h1>
         <!--CSV upload form-->
         <form id="opener">
-            <input type="text" placeholder="Lecturer Name" id="lecturer">
-            <br/>
+            <br/> 
             <!-- actual csv upload button which is hidden -->
             <input type="file" id="csvFile" accept=".csv" hidden />
             <!-- custom upload button -->
@@ -56,6 +55,7 @@
 
         </form>
         <div>
+<<<<<<< Updated upstream
         <input type="submit" style= "margin-bottom: 15px; display: block; width:120px" value="Send to Database" onclick="sendData()" />
         <input type="button" style= "margin-bottom: 15px; display: block; width:120px" value="Merge Data" onclick="mergeData()">
         <input type="button" style= "width:120px" value="Send to Email" onclick="sendMail()">
@@ -65,6 +65,18 @@
 
 
         <div style="float: left; width:50%;"><h2>CSV Table</h2></div>
+=======
+            <input type="submit" style="margin-bottom: 15px; display: block; width:120px" value="Send to Database" onclick="sendData()" />
+            <input type="button" style="width:120px" value="Send to Email" onclick="sendMail()">
+        </div>
+        <div style="float: left; width:50%;">
+            <h2>CSV Table</h2>
+        </div>
+        <div style="float: left; width:50%;">
+            <h2>Text Template</h2>
+        </div>
+        <div id="tableDiv" class="tableDiv"></div>
+>>>>>>> Stashed changes
 
         <div style="float: left; width:50%;"><h2>Text Template</h2></div>
 
@@ -73,14 +85,34 @@
     
         <div id="tempDiv" class="tempDiv"></div>
 
+<<<<<<< Updated upstream
 
 
         
       
+=======
+        <div id="files" class="main" style="display: none;">
+
+            </div>
+
+            <h1>Files</h1>
+            <form id="opener">
+                <label> Retrieve Data</label>
+                <input onclick="getData()" type="button" style="width:60px" value="Submit" />
+                <input type="button" style="margin-bottom: 15px; display: block; width:120px" value="Merge Data" onclick="mergeData()">
+
+            </form>
+    
+            <h2> Retrieve Data</h2>
+        
+            <div id="tempDivBOX" class="tempDiv">
+                <p id="showdata"> </p>
+    
+>>>>>>> Stashed changes
     </div>
 
     <!--Files page-->
-    <div id="files" class="main" style="display: none;">
+    <!-- <div id="files" class="main" style="display: none;">
         <h1>Files</h1>
         <form id="opener">
             <label> Lecturer Name</label>
@@ -96,7 +128,11 @@
             <div id="tempDivBOX" class="tempDiv">
                 <p id="showdata"> </p>
 
+<<<<<<< Updated upstream
             </div>
+=======
+        </div> -->
+>>>>>>> Stashed changes
 
         
 

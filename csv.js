@@ -55,34 +55,26 @@ function sendData(){
    }
 }
 
-function getData(){
+function getData() { // GET request to database
     var httpr = new XMLHttpRequest();
     httpr.onload = function(){
         const serverResponse = document.getElementById("serverResponse");
         // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
         fromDB = this.responseText;
+        convertToObject(); // calls function to convert data from database
 
     }
     httpr.open("GET", `get.php?lecturer=${lecturer}`);
     httpr.send();
-<<<<<<< Updated upstream
-    
-    
-=======
-
->>>>>>> Stashed changes
 }
 
-async function submitGetLecturer() {
-    
-    lecturer = document.getElementById("lecturerGET").value;
-    getData();
-
-}
+// async function submitGetLecturer() {
+//     lecturer = document.getElementById("lecturerGET").value;
+//     getData();
+// }
 
 
-function convertToObject() {
-
+function convertToObject() { // converts retrieved data from database to object.
 
     var arr = fromDB.split("\n")
 
@@ -158,6 +150,7 @@ function mergeData() {
                 }
             }
         }
+        email  += '\n\n------------\n\n'
         emails[StudentEmail] = email
     }
     console.log("emails", emails)
@@ -175,6 +168,7 @@ function showData() { // Shows the merged data
         tempStr += val;
 
     }
+    tempStr += "\n";  // adds newline char at the end of each block
     console.log(tempStr)
     document.getElementById("showdata").innerText = tempStr;
 }
@@ -305,6 +299,12 @@ document.getElementById('txt').addEventListener('submit', function(e) {
     var reader = new FileReader();
     reader.onload = function(e) {
         textTemplate = e.target.result;
+<<<<<<< Updated upstream
+=======
+        
+        textTemplate = textTemplate.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // Stops potential html injection
+
+>>>>>>> Stashed changes
         let temp = document.getElementById("tempDiv");
         // Clears template div to show the current file
         temp.innerHTML = textTemplate;
@@ -412,7 +412,7 @@ myForm.addEventListener("submit", function(e) {
     const input = csvFile.files[0];
     const reader = new FileReader();
     spreadSheet = csvFile.value.substring(csvFile.value.lastIndexOf("\\") + 1);
-    lecturer = lecturerInput.value;
+
 
     reader.onload = function(e) {
         const text = e.target.result;
@@ -474,6 +474,34 @@ myForm.addEventListener("submit", function(e) {
     reader.readAsText(input);
 })
 
+// Login stuff
+function onSignIn(googleUser) {
+    // Useful data for your client-side scripts:
+    var profile = googleUser.getBasicProfile();
+    lecturer = googleUser.getBasicProfile().getGivenName()
+
+    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+    console.log('Full Name: ' + profile.getName());
+    console.log('Given Name: ' + profile.getGivenName());
+    console.log('Family Name: ' + profile.getFamilyName());
+    console.log("Image URL: " + profile.getImageUrl());
+    console.log("Email: " + profile.getEmail());
+
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token: " + id_token);
+    //Once logged in - show the other side nav items & upload page
+    if (id_token !== undefined && id_token !== '' && id_token !== null) {
+        showUpload();
+        loginbar.style.display = "none";
+        filebar.style.display = "block";
+        sendbar.style.display = "block";
+        upbar.style.display = "block";
+        signOutbar.style.display = "block";
+        //greet user on the website
+        document.querySelector('#content').innerText = "Hello " + profile.getGivenName() + "!";
+    }
+}
 
 
 ;
