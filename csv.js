@@ -54,24 +54,27 @@ function sendData() {
     }
 }
 
-function getData() {
+function getData() { // GET request to database
     var httpr = new XMLHttpRequest();
     httpr.onload = function() {
         const serverResponse = document.getElementById("serverResponse");
         // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
         fromDB = this.responseText;
+        convertToObject(); // calls function to convert data from database
+
     }
     httpr.open("GET", `get.php?lecturer=${lecturer}`);
     httpr.send();
 }
 
-async function submitGetLecturer() {
-    lecturer = document.getElementById("lecturerGET").value;
-    getData();
-}
+// async function submitGetLecturer() {
+//     lecturer = document.getElementById("lecturerGET").value;
+//     getData();
+// }
 
 
-function convertToObject() {
+function convertToObject() { // converts retrieved data from database to object.
+
     var arr = fromDB.split("\n")
     var obj = {}
     for (i of arr) {
@@ -140,6 +143,7 @@ function mergeData() {
                 }
             }
         }
+        email  += '\n\n------------\n\n'
         emails[StudentEmail] = email
     }
     console.log("emails", emails)
@@ -153,6 +157,7 @@ function showData() { // Shows the merged data
     for (const [key, val] of Object.entries(emails)) {
         tempStr += val;
     }
+    tempStr += "\n";  // adds newline char at the end of each block
     console.log(tempStr)
     document.getElementById("showdata").innerText = tempStr;
 }
@@ -337,7 +342,7 @@ document.getElementById('txt').addEventListener('submit', function(e) {
     reader.onload = function(e) {
         textTemplate = e.target.result;
         
-        textTemplate = textTemplate.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        textTemplate = textTemplate.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // Stops potential html injection
 
         let temp = document.getElementById("tempDiv");
         // Clears template div to show the current file
@@ -446,7 +451,7 @@ myForm.addEventListener("submit", function(e) {
     const input = csvFile.files[0];
     const reader = new FileReader();
     spreadSheet = csvFile.value.substring(csvFile.value.lastIndexOf("\\") + 1);
-    lecturer = lecturerInput.value;
+
 
     reader.onload = function(e) {
         const text = e.target.result;
@@ -512,6 +517,8 @@ myForm.addEventListener("submit", function(e) {
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
+    lecturer = googleUser.getBasicProfile().getGivenName()
+
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
     console.log('Given Name: ' + profile.getGivenName());
