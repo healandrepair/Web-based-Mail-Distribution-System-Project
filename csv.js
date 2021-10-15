@@ -65,8 +65,12 @@ function getData(){
     }
     httpr.open("GET", `get.php?lecturer=${lecturer}`);
     httpr.send();
+<<<<<<< Updated upstream
     
     
+=======
+
+>>>>>>> Stashed changes
 }
 
 async function submitGetLecturer() {
