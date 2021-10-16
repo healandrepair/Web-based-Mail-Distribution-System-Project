@@ -17,6 +17,8 @@ var dbData = '';
 //Dict obj containing the student & their data
 var data = '';
 
+var storedCsv = '';
+
 //CSV & template elements from the form
 const myForm = document.getElementById("opener");
 const csvFile = document.getElementById("csvFile");
@@ -70,21 +72,30 @@ function sendData() {
             httpr.send(fd);
         }
     }
+    getStoredCsv()
 }
 
 /* Retrieves data from the database via a GET request */
-function getData() {
-    var httpr = new XMLHttpRequest();
-    httpr.onload = function() {
-        const serverResponse = document.getElementById("serverResponse");
-        // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
-        dbData = this.responseText;
-        console.log("fromDB", dbData);
-        // calls function to convert data from database to obj
-        convertToObject();
-    }
-    httpr.open("GET", `get.php?lecturer=${lecturer}`);
-    httpr.send();
+async function getData() {
+        dbData = ''
+
+        for (i in storedCsv){
+            if (document.getElementById(storedCsv[i]).checked){
+                var httpr = new XMLHttpRequest();
+                httpr.onload = function() {
+                    const serverResponse = document.getElementById("serverResponse");
+                    // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
+                    dbData += this.responseText;
+                    // calls function to convert data from database to obj
+                    convertToObject()
+                }
+                httpr.open("GET", `get.php?lecturer=${lecturer}&spreadsheet=${storedCsv[i]}`);
+                httpr.send();
+            }
+        }
+
+
+    
 }
 
 /* Converts retrieved data from database to object type.*/
@@ -110,15 +121,23 @@ function convertToObject() {
         }
         // console.log(i)
     }
-    console.log("obj", obj);
+    //console.log("obj", obj);
     data = obj; //Stores the Object of Objects in data variable.
+}
+async function csvMerge(){
+    await getData()
+    .then(() => mergeData())
+    .then(() => showData())
 }
 
 /* Merges retrieved data from database with email template.*/
-function mergeData() {
+async function mergeData() {
+    emails = {};
     //loop through each dict obj containing CSV values of each student
     for (const [StudentEmail, StudentData] of Object.entries(data)) {
+        console.log(data)
         var email = textTemplate;
+        state = ''
         //get the subject text for the email and remove it from email template
         var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
         email = email.replace(subjectLine, '').trim();
@@ -151,21 +170,23 @@ function mergeData() {
         email += '\n\n------------\n\n'
         emails[StudentEmail] = email
     }
+
     console.log("emails", emails);
 
-    showData();
+
 
 }
 
 /* Shows the merged data in the div */
 function showData() {
+    console.log('start')
     tempStr = "";
     for (const [key, val] of Object.entries(emails)) {
         tempStr += val;
     }
     tempStr += "\n"; // adds newline char at the end of each block
     console.log(tempStr)
-    document.getElementById("showdata").innerText = tempStr;
+    document.getElementById("tempDiv").innerText = tempStr;
 }
 
 /* Shows Home div */
@@ -508,7 +529,7 @@ function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
     lecturer = profile.getGivenName();
-
+    getStoredCsv()
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
     console.log('Given Name: ' + profile.getGivenName());
@@ -543,3 +564,34 @@ function signOut() {
         document.querySelector('#content').innerText = " ";
     })
 };
+
+function getStoredCsv() {
+    document.getElementById("showfiles").innerHTML = "";
+    var httpr = new XMLHttpRequest();
+    httpr.onload = function() {
+        const serverResponse = document.getElementById("serverResponse");
+        storedCsv = this.responseText.split(',')
+        // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
+        for (i in this.responseText.split(',')){
+            console.log(i)
+            var myDiv = document.getElementById("showfiles");
+
+            var checkbox = document.createElement('input');
+
+            checkbox.type = "checkbox";
+            checkbox.name = "name";
+            checkbox.value = "value";
+            checkbox.id = this.responseText.split(',')[i];
+             
+            var label = document.createElement('label');
+             
+            label.htmlFor = this.responseText.split(',')[i];
+             
+            label.appendChild(document.createTextNode(this.responseText.split(',')[i]));
+            myDiv.appendChild(checkbox);
+            myDiv.appendChild(label);
+        }
+    }
+    httpr.open("GET", `getcsv.php?lecturer=${lecturer}`);
+    httpr.send();
+}

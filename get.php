@@ -24,10 +24,11 @@ $dbHost = "35.201.5.115";
 //Get lecturer's name & check for sql injection
 $lecturer1 =$_GET["lecturer"];
 $lecturer=checker($lecturer1);
+$spreadsheet= $_GET["spreadsheet"];
 //Connect to db
 $conn = mysqli_connect($dbHost, $username, $password,$dbName);
 //Select data from db table based on lecturer's name
-$sql = "SELECT * FROM csvData.CSVTable Where Lecturer = '$lecturer'" ;
+$sql = "SELECT * FROM csvData.CSVTable Where Lecturer = '$lecturer' and spreadsheet = '$spreadsheet'" ;
 $result = mysqli_query($conn,$sql) or die("Error " . mysqli_error($conn));
 $results = mysqli_fetch_assoc($result);
 $resultstring = $results['CsvValues'];
@@ -37,7 +38,6 @@ while($row = $result->fetch_assoc()) {
   echo $row["Email"],":",$row["Column"], "=", $row["CsvValues"], "\n";
 }
 
-echo $resultstring;
 //close the connection
 mysqli_close($conn);
 
