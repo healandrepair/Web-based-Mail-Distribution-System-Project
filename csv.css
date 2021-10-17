@@ -1,5 +1,30 @@
     table,
     th,
+
+    @keyframes slide{
+        0%{transform: translateX(0px);}
+        5%{transform: translateX(15px);}
+        10%{transform: translateX(30px);}
+        15%{transform: translateX(40px);}
+        20%{transform: translateX(50px);}
+        25%{transform: translateX(60px);}
+        30%{transform: translateX(70px);}
+        35%{transform: translateX(80px);}
+        40%{transform: translateX(90px);}
+        45%{transform: translateX(100px);}
+        50%{transform: translateX(90px);}
+        55%{transform: translateX(80px);}
+        60%{transform: translateX(70px);}
+        65%{transform: translateX(60px);}
+        70%{transform: translateX(50px);}
+        75%{transform: translateX(40px);}
+        80%{transform: translateX(30px);}
+        85%{transform: translateX(20px);}
+        90%{transform: translateX(10px);}
+        95%{transform: translateX(5px);}
+        100%{transform: translateX(0px);}
+    }
+
     td {
         border: 1px solid black;
         border-collapse: collapse;
@@ -36,7 +61,7 @@
         /* background-image: url("https://i.gifer.com/RMrT.gif"); */
         /* background-image: url("https://cutewallpaper.org/21/tiling-background-tumblr/50-Pixel-Wallpaper-Tumblr-on-WallpaperSafari.gif"); */
         /* background-image: url("https://cutewallpaper.org/21/tiling-background-tumblr/Snow-Backgrounds.jpg"); */
-        background-image: url("https://64.media.tumblr.com/3595220382818394f62d84319c8995b8/tumblr_p6f5mdOscq1xormwyo2_250.png");
+        /*background-image: url("https://64.media.tumblr.com/3595220382818394f62d84319c8995b8/tumblr_p6f5mdOscq1xormwyo2_250.png");*/
         -webkit-animation: scrolling 2500s linear infinite;
         -moz-animation: scrolling 2500s linear infinite;
         -o-animation: scrolling 2500s linear infinite;
@@ -221,4 +246,46 @@
     .sidenav a:hover::after,
     .sidenav a:focus::after {
         transform: scale(1);
+    }
+
+    .center-align{
+        text-align: center;
+    }
+
+
+    .grid-layout{
+        margin-left: 160px;
+        /* Same as the width of the sidebar */
+        padding: 0px 10px;
+        /* Right & left padding is 10px*/
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+        grid-template-rows: repeat(5, 2fr);
+
+    }
+
+    .grid-one-left{
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .grid-one-right{
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .grid-two-left{
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .grid-two-right{
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .grid-bottom-full{
+        grid-column: 1/2;
+        grid-row: 3;
     }

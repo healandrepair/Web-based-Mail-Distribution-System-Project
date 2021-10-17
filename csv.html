@@ -37,10 +37,10 @@
     </div>
 
     <!--Upload page-->
-    <div id="upload" class="main" style="display: none;">
+    <div id="upload" class="grid-layout" style="display: none;">
         <h1>Upload and Send</h1>
         <!--CSV upload form-->
-        <form id="opener">
+        <form id="opener" class="grid-one-left">
             <br/> 
             <!-- actual csv upload button which is hidden -->
             <input type="file" id="csvFile" accept=".csv" hidden />
@@ -53,7 +53,7 @@
         </form>
 
         <!--Template upload form-->
-        <form id="txt">
+        <form id="txt" class="grid-one-right">
             <!-- actual template upload button which is hidden -->
             <input type="file" id="template" accept=".txt" hidden />
             <!-- custom upload button -->
@@ -70,6 +70,8 @@
         <div style="float: left; width:50%;">
             <h2>CSV Table</h2>
         </div>
+
+
         <div style="float: left; width:50%;">
             <h2>Text Template</h2>
         </div>

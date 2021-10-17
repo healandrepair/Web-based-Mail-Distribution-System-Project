@@ -14,7 +14,10 @@ function checker($s)
     } 
   return
       implode("", $result);
-} 
+}
+
+
+//
 
 //Db info
 $username = 'root';
