@@ -77,25 +77,21 @@ function sendData() {
 
 /* Retrieves data from the database via a GET request */
 async function getData() {
-        dbData = ''
 
-        for (i in storedCsv){
-            if (document.getElementById(storedCsv[i]).checked){
-                var httpr = new XMLHttpRequest();
-                httpr.onload = function() {
-                    const serverResponse = document.getElementById("serverResponse");
-                    // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
-                    dbData += this.responseText;
-                    // calls function to convert data from database to obj
-                    convertToObject()
-                }
-                httpr.open("GET", `get.php?lecturer=${lecturer}&spreadsheet=${storedCsv[i]}`);
-                httpr.send();
+    for (i in storedCsv) {
+        if (document.getElementById(storedCsv[i]).checked) {
+            var httpr = new XMLHttpRequest();
+            httpr.onload = function() {
+                const serverResponse = document.getElementById("serverResponse");
+                // serverResponse.innerHTML = this.responseText; 
+                dbData += this.responseText;
+                // calls function to convert data from database to obj
+                convertToObject()
             }
+            httpr.open("GET", `get.php?lecturer=${lecturer}&spreadsheet=${storedCsv[i]}`);
+            httpr.send();
         }
-
-
-    
+    }
 }
 
 /* Converts retrieved data from database to object type.*/
@@ -124,10 +120,10 @@ function convertToObject() {
     //console.log("obj", obj);
     data = obj; //Stores the Object of Objects in data variable.
 }
-async function csvMerge(){
+async function csvMerge() {
     await getData()
-    .then(() => mergeData())
-    .then(() => showData())
+        .then(() => mergeData())
+        .then(() => showData())
 }
 
 /* Merges retrieved data from database with email template.*/
@@ -137,7 +133,6 @@ async function mergeData() {
     for (const [StudentEmail, StudentData] of Object.entries(data)) {
         console.log(data)
         var email = textTemplate;
-        state = ''
         //get the subject text for the email and remove it from email template
         var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
         email = email.replace(subjectLine, '').trim();
@@ -529,6 +524,7 @@ function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
     lecturer = profile.getGivenName();
+    //get all stored CSV files of the lecturer
     getStoredCsv()
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
@@ -565,14 +561,16 @@ function signOut() {
     })
 };
 
+/* Gets all the stored CSV files of the lecturer */
 function getStoredCsv() {
     document.getElementById("showfiles").innerHTML = "";
     var httpr = new XMLHttpRequest();
     httpr.onload = function() {
         const serverResponse = document.getElementById("serverResponse");
         storedCsv = this.responseText.split(',')
+        console.log("storedCsv", storedCsv);
         // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
-        for (i in this.responseText.split(',')){
+        for (i in this.responseText.split(',')) {
             console.log(i)
             var myDiv = document.getElementById("showfiles");
 
@@ -582,11 +580,11 @@ function getStoredCsv() {
             checkbox.name = "name";
             checkbox.value = "value";
             checkbox.id = this.responseText.split(',')[i];
-             
+
             var label = document.createElement('label');
-             
+
             label.htmlFor = this.responseText.split(',')[i];
-             
+
             label.appendChild(document.createTextNode(this.responseText.split(',')[i]));
             myDiv.appendChild(checkbox);
             myDiv.appendChild(label);

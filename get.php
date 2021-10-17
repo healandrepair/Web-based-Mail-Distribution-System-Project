@@ -19,23 +19,28 @@ function checker($s)
 
 //
 
-//Db info
+//Db user
 $username = 'root';
 $password = 'team13';
+//Db
 $dbName = 'csvData';
 $dbHost = "35.201.5.115";
-//Get lecturer's name & check for sql injection
+
+//Checks the lecturer's name for sql injection
 $lecturer1 =$_GET["lecturer"];
 $lecturer=checker($lecturer1);
+
 $spreadsheet= $_GET["spreadsheet"];
-//Connect to db
-$conn = mysqli_connect($dbHost, $username, $password,$dbName);
-//Select data from db table based on lecturer's name
+
+//Connect to db server and db
+$conn = mysqli_connect($dbHost, $username, $password, $dbName);
+
+//Select data from db table based on lecturer's name and spreadsheet
 $sql = "SELECT * FROM csvData.CSVTable Where Lecturer = '$lecturer' and spreadsheet = '$spreadsheet'" ;
 $result = mysqli_query($conn,$sql) or die("Error " . mysqli_error($conn));
 $results = mysqli_fetch_assoc($result);
 $resultstring = $results['CsvValues'];
-//fetch a result row as an associative array (i.e. dict)
+
 while($row = $result->fetch_assoc()) {
   //format of the data response string.
   echo $row["Email"],":",$row["Column"], "=", $row["CsvValues"], "\n";
