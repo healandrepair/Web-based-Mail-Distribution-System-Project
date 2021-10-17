@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WBMDS</title>
+
+    <style>
+        body{
+            background-color: black;
+
+        }
+
+        /*
+        Keyframes for a sliding text, used in the landing page to animate individual
+        paragraphs, use animation: slide Xs; to animate any paragraph text in landing page
+        */
+        @keyframes slide{
+            0%{transform: translateX(0px);}
+            2%{transform: translateX(15px);}
+            5%{transform: translateX(30px);}
+            8%{transform: translateX(40px);}
+            10%{transform: translateX(50px);}
+            13%{transform: translateX(60px);}
+            15%{transform: translateX(70px);}
+            18%{transform: translateX(80px);}
+            20%{transform: translateX(90px);}
+            23%{transform: translateX(100px);}
+            25%{transform: translateX(90px);}
+            28%{transform: translateX(80px);}
+            30%{transform: translateX(70px);}
+            33%{transform: translateX(60px);}
+            35%{transform: translateX(50px);}
+            38%{transform: translateX(40px);}
+            40%{transform: translateX(30px);}
+            43%{transform: translateX(20px);}
+            45%{transform: translateX(10px);}
+            48%{transform: translateX(5px);}
+            50%{transform: translateX(0px);}
+            53%{transform: translateX(-15px);}
+            55%{transform: translateX(-30px);}
+            58%{transform: translateX(-40px);}
+            60%{transform: translateX(-50px);}
+            63%{transform: translateX(-60px);}
+            65%{transform: translateX(-70px);}
+            68%{transform: translateX(-80px);}
+            70%{transform: translateX(-90px);}
+            73%{transform: translateX(-100px);}
+            75%{transform: translateX(-90px);}
+            78%{transform: translateX(-80px);}
+            80%{transform: translateX(-70px);}
+            83%{transform: translateX(-60px);}
+            85%{transform: translateX(-50px);}
+            88%{transform: translateX(-40px);}
+            90%{transform: translateX(-30px);}
+            93%{transform: translateX(-20px);}
+            95%{transform: translateX(-10px);}
+            98%{transform: translateX(-5px);}
+            100%{transform: translateX(0px);}
+        }
+
+        /* the following grid template was mostly adapted from https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout */
+        /* Init grid payout, 10 columns*/
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            grid-auto-rows: minmax(10px, auto);
+        }
+        .one {
+            grid-column: 1 / 3;
+            grid-row: 1;
+        }
+        .two {
+            grid-column: 2 / 4;
+            grid-row: 1 / 3;
+            margin: 0px;
+        }
+        .three {
+            grid-column: 1;
+            grid-row: 2 / 5;
+        }
+        .four {
+            grid-column: 9/10;
+            grid-row: 1;
+        }
+        .four-one {
+            vertical-align: top;
+            grid-column: 5/8;
+            grid-row: 2;
+        }
+        .four-two {
+            grid-column: 9/10;
+            grid-row: 2;
+        }
+
+        .four-three {
+            grid-column: 9/10;
+            grid-row: 3;
+        }
+        .five {
+            grid-column: 2;
+            grid-row: 4;
+        }
+        .six {
+            grid-column: 3;
+            grid-row: 4;
+        }
+
+        /* id: p != paragraph, this is just an id tag for some text*/
+        #p{
+            line-height: 60%;
+            margin: 0px;
+            padding: 0 5px 0 5px;
+            color: transparent;
+            font-size: 6vw;
+            font-variant: all-small-caps;
+            font-family: "Arial Black",Serif;
+            font-weight: bold;
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: white;
+        }
+        #p:hover{
+            color: white;
+
+            animation: slide 3s;
+            cursor: url("https://64.media.tumblr.com/aa2b89ae6a99ef43a1b5b03f9c4b9569/f152e7d80d9cb370-38/s75x75_c1/e5c6cd5b1450f12a0e9b5a6c0d717eb23ca2ceec.png"),auto;
+
+        }
+
+        #p2{
+            line-height: 60%;
+            margin: 0px;
+            padding: 0 5px 0 5px;
+            color: transparent;
+            font-size: 6vw;
+            font-variant: all-small-caps;
+            font-family: "Arial Black",Serif;
+            font-weight: bold;
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: white;
+        }
+        #p2:hover{
+            color: indigo;
+            animation: slide 3s;
+            -webkit-text-stroke-color: darkslateblue;
+            cursor: url("https://64.media.tumblr.com/aa2b89ae6a99ef43a1b5b03f9c4b9569/f152e7d80d9cb370-38/s75x75_c1/e5c6cd5b1450f12a0e9b5a6c0d717eb23ca2ceec.png"),auto;
+
+        }
+
+        #text{
+            line-height: 7%;
+            text-align: right;
+            font-size: 1.5vw;
+            font-variant: all-small-caps;
+            color: cornsilk;
+        }
+
+        .image{
+            width: 20%;
+            height: 20%;
+        }
+
+        #alam{
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+<div class="grid-layout">
+    <div class="two">
+        <p id="p">G-UNIT</p>
+        <p id="p">G-UNIT</p>
+        <p id="p">G-UNIT</p>
+        <p id="p">G-UNIT</p>
+        <br><br><br><br><br><br>
+        <br><br><br>
+        <p id="p2">WEB</p>
+        <p id="p2">BASED</p>
+        <p id="p2">MAIL</p>
+        <p id="p2">DISTRIBUTION</p>
+        <p id="p2">SYSTEM</p>
+
+
+    </div>
+    <div class="four" id="text">
+        <p style="font-family: 'Arial Black',sans-serif">
+            lecturer <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <a href="csv.html">login</a>
+        </p>
+    </div>
+
+    <div class="four-one">
+        <img src="G_Unit_logo.png" style="height: 15vw; width: 15vw;">
+    </div>
+
+    <div class="four-two" id="text">
+        <p style="font-family: 'Arial Black',sans-serif">M.MCLACHLAN</p>
+        <p style="font-family: 'Arial Black',sans-serif">M.ZHONGHAO</p>
+        <p style="font-family: 'Arial Black',sans-serif">P.GOUNDER</p>
+        <p style="font-family: 'Arial Black',sans-serif">M.TADESSE</p>
+        <p id="alam" style="font-family: 'Arial Black',sans-serif">_</p>
+        <p style="font-family: 'Arial Black',sans-serif">E.NG</p>
+        <p style="font-family: 'Arial Black',sans-serif">Q.VO</p>
+    </div>
+
+    <div class="four-three" id="text">
+        <p style="font-family: 'Arial Black',sans-serif">
+            TEAM
+        </p>
+    </div>
+</div>
+<script>
+
+    /*function geneticAlgorithm(target){
+        let lenStr = target.length;
+        let index = 0;
+        let offTarget = true;
+        let realName = "";
+        let incomplete = true;
+
+        while(offTarget){
+            let asciiCode = Math.floor(Math.random() * (123 - 97)) + 97;
+            let asciiChar = String.fromCharCode(asciiCode);
+            document.getElementById("alam").innerText = realName + asciiChar;
+            if(asciiChar === target[index]){
+                realName += asciiChar;
+                if(index === lenStr){
+                    offTarget = false;
+                    break
+                }
+                else{
+                    index++;
+                }
+            }
+
+        }
+
+        for(let i = 0; i < lenStr; i++){
+            document.getElementById("alam").innerText += target[i];
+        }
+
+
+    }*/
+
+
+
+</script>
+</body>
+</html>
