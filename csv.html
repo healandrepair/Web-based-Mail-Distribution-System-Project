@@ -38,10 +38,9 @@
 
     <!--Upload page-->
     <div id="upload" class="main" style="display: none;">
-        <h1>Upload and Send</h1>
+        <h1>Upload Files and Send Emails</h1>
         <!--CSV upload form-->
         <form id="opener">
-            <br/> 
             <!-- actual csv upload button which is hidden -->
             <input type="file" id="csvFile" accept=".csv" hidden />
             <!-- custom upload button -->
@@ -49,7 +48,9 @@
             <!-- name of CSV file chosen -->
             <span id="csvFileChosen">No file chosen</span>
             <br />
-            <input type="submit" style="width:60px" value="Submit" />
+            <input type="submit" value="Show preview" />
+            <br />
+            <input type="submit" value="Save CSV file" onclick="sendData()" />
         </form>
 
         <!--Template upload form-->
@@ -61,36 +62,32 @@
             <!-- name of template chosen -->
             <span id="templateChosen">No file chosen</span>
             <br />
-            <input type="submit" style="width:60px" value="Submit" />
+            <input type="submit" value="Show preview" />
         </form>
-        <div>
-            <input type="submit" style="margin-bottom: 15px; display: block; width:120px" value="Send to Database" onclick="sendData()" />
-            <input type="button" style="width:120px" value="Send to Email" onclick="sendMail()">
-        </div>
+
+        <!--Files form-->
+        <form id="filesForm">
+            <label> Select CSV file to merge with email template</label>
+            <div id='showfiles'></div>
+            <input type="button" value="Merge with Template" onclick="csvMerge()">
+            <span>(Please press twice)</span>
+        </form>
+        <!--Send email form-->
+        <form>
+            <input type="button" value="Send Email(s) to Student(s)" onclick="sendMail()">
+        </form>
+        <p id="serverResponse" style="padding-left: 200px"></p>
         <div style="float: left; width:50%;">
             <h2>CSV Table</h2>
         </div>
         <div style="float: left; width:50%;">
-            <h2>Text Template</h2>
+            <h2>Email Template</h2>
         </div>
         <div id="tableDiv" class="tableDiv"></div>
 
         <div id="tempDiv" class="tempDiv"></div>
 
-        <div id="files" class="main" style="display: none;">
-
-            </div>
-
-            <h1>Files</h1>
-            <form id="opener">
-                <div id='showfiles'></div>
-                <label> Retrieve Data</label>
-                <input type="button" style="margin-bottom: 15px; display: block; width:120px" value="Merge Data" onclick="csvMerge()">
-
-            </form>
-    
-            <h2> Retrieve Data</h2>
-    
+        <div id="files" class="main" style="display: none;"></div>
     </div>
 
     <!--Files page-->
@@ -112,7 +109,7 @@
 
         </div> -->
 
-        <!-- <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;"> -->
+    <!-- <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;"> -->
     </div>
 
     <!--Send page-->
@@ -121,7 +118,5 @@
         <img src="https://i.imgur.com/RwKm85K.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
 
     </div>
-    <p id="serverResponse" style="padding-left: 200px"></p>
 
-    <!-- <p id="serverResponseStore" style="padding-left: 200px"></p> -->
 </body>

@@ -13,20 +13,37 @@
     h1 {
         color: #05457f;
     }
-
-    h2 {
-        
-        color: #05457f;
-        
-    }
-
     
-
+    h2 {
+        color: #05457f;
+    }
+    
     button {
         float: left;
     }
-
-
+    
+    label {
+        font-size: 13px;
+    }
+    
+    input {
+        margin-top: 1%;
+    }
+    
+    form {
+        display: inline-block;
+        clear: both;
+        width: 20%
+    }
+    
+    .buttons {
+        float: left;
+        margin-right: 1%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        display: block;
+        text-align: center;
+    }
     
     body {
         font-family: "Lato", sans-serif;
@@ -42,17 +59,16 @@
         -o-animation: scrolling 2500s linear infinite;
         animation: scrolling 2500s linear infinite;
     }
-    
     /* Animation code modified from https://stackoverflow.com/questions/33101376/html-5-css-animation-scrolling-tiled-background-image */
-
+    
     @-webkit-keyframes scrolling {
-        from{
+        from {
             background-position: 0 0;
         }
-        to{
+        to {
             background-position: -10000% 10000%;
         }
-      }
+    }
     /*Upload file buttons*/
     
     span {
@@ -97,8 +113,6 @@
     table {
         font-size: 75%;
     }
-
-    
     
     .tableDiv {
         float: left;
