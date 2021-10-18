@@ -27,8 +27,8 @@ const txtFile = document.getElementById("template");
 const templateChosen = document.getElementById('templateChosen');
 
 //Side bar elements
-filebar = document.getElementById('filebar');
-sendbar = document.getElementById('sendbar');
+// filebar = document.getElementById('filebar');
+// sendbar = document.getElementById('sendbar');
 upbar = document.getElementById('upbar');
 loginbar = document.getElementById('loginbar');
 loginPage = document.getElementById('login');
@@ -188,21 +188,21 @@ function showData() {
 const showHome = () => {
     document.getElementById('home').style.display = 'block'
     document.getElementById('upload').style.display = 'none'
-    document.getElementById('files').style.display = 'none'
-    document.getElementById('send').style.display = 'none'
+    // document.getElementById('files').style.display = 'none'
+    // document.getElementById('send').style.display = 'none'
     document.getElementById('login').style.display = 'none'
 
 
     //None of the menu bar elements is selected
-    if (filebar.classList.contains('current')) {
-        filebar.classList.remove('current');
-        filebar.classList.add('default');
-    }
+    // if (filebar.classList.contains('current')) {
+    //     filebar.classList.remove('current');
+    //     filebar.classList.add('default');
+    // }
 
-    if (sendbar.classList.contains('current')) {
-        sendbar.classList.remove('current');
-        sendbar.classList.add('default');
-    }
+    // if (sendbar.classList.contains('current')) {
+    //     sendbar.classList.remove('current');
+    //     sendbar.classList.add('default');
+    // }
 
     if (upbar.classList.contains('current')) {
         upbar.classList.remove('current');
@@ -218,19 +218,19 @@ const showHome = () => {
 const showUpload = () => {
     document.getElementById('upload').style.display = 'block'
     document.getElementById('home').style.display = 'none'
-    document.getElementById('files').style.display = 'none'
-    document.getElementById('send').style.display = 'none'
+    // document.getElementById('files').style.display = 'none'
+    // document.getElementById('send').style.display = 'none'
     document.getElementById('login').style.display = 'none'
 
-    if (filebar.classList.contains('current')) {
-        filebar.classList.remove('current');
-        filebar.classList.add('default');
-    }
+    // if (filebar.classList.contains('current')) {
+    //     filebar.classList.remove('current');
+    //     filebar.classList.add('default');
+    // }
 
-    if (sendbar.classList.contains('current')) {
-        sendbar.classList.remove('current');
-        sendbar.classList.add('default');
-    }
+    // if (sendbar.classList.contains('current')) {
+    //     sendbar.classList.remove('current');
+    //     sendbar.classList.add('default');
+    // }
 
     if (upbar.classList.contains('default')) {
         upbar.classList.remove('default');
@@ -243,52 +243,52 @@ const showUpload = () => {
 }
 
 /* Shows Files div */
-const showFiles = () => {
-    document.getElementById('upload').style.display = 'none'
-    document.getElementById('home').style.display = 'none'
-    document.getElementById('files').style.display = 'block'
-    document.getElementById('send').style.display = 'none'
-    document.getElementById('login').style.display = 'none'
+// const showFiles = () => {
+//     document.getElementById('upload').style.display = 'none'
+//     document.getElementById('home').style.display = 'none'
+//     // document.getElementById('files').style.display = 'block'
+//     // document.getElementById('send').style.display = 'none'
+//     document.getElementById('login').style.display = 'none'
 
 
-    if (filebar.classList.contains('default')) {
-        filebar.classList.remove('default');
-        filebar.classList.add('current');
-    }
+//     // if (filebar.classList.contains('default')) {
+//     //     filebar.classList.remove('default');
+//     //     filebar.classList.add('current');
+//     // }
 
-    if (sendbar.classList.contains('current')) {
-        sendbar.classList.remove('current');
-        sendbar.classList.add('default');
-    }
+//     // if (sendbar.classList.contains('current')) {
+//     //     sendbar.classList.remove('current');
+//     //     sendbar.classList.add('default');
+//     // }
 
-    if (upbar.classList.contains('current')) {
-        upbar.classList.remove('current');
-        upbar.classList.add('default');
-    }
-    if (loginbar.classList.contains('current')) {
-        loginbar.classList.remove('current');
-        loginbar.classList.add('default');
-    }
-}
+//     if (upbar.classList.contains('current')) {
+//         upbar.classList.remove('current');
+//         upbar.classList.add('default');
+//     }
+//     if (loginbar.classList.contains('current')) {
+//         loginbar.classList.remove('current');
+//         loginbar.classList.add('default');
+//     }
+// }
 
 /* Shows Send div */
 const showSend = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
-    document.getElementById('files').style.display = 'none'
-    document.getElementById('send').style.display = 'block'
+    // document.getElementById('files').style.display = 'none'
+    // document.getElementById('send').style.display = 'block'
     document.getElementById('login').style.display = 'none'
 
 
-    if (filebar.classList.contains('current')) {
-        filebar.classList.remove('current');
-        filebar.classList.add('default');
-    }
+    // if (filebar.classList.contains('current')) {
+    //     filebar.classList.remove('current');
+    //     filebar.classList.add('default');
+    // }
 
-    if (sendbar.classList.contains('default')) {
-        sendbar.classList.remove('default');
-        sendbar.classList.add('current');
-    }
+    // if (sendbar.classList.contains('default')) {
+    //     sendbar.classList.remove('default');
+    //     sendbar.classList.add('current');
+    // }
 
     if (upbar.classList.contains('current')) {
         upbar.classList.remove('current');
@@ -304,20 +304,20 @@ const showSend = () => {
 const showLogin = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
-    document.getElementById('files').style.display = 'none'
-    document.getElementById('send').style.display = 'none'
+    // document.getElementById('files').style.display = 'none'
+    // document.getElementById('send').style.display = 'none'
     document.getElementById('login').style.display = 'block'
 
 
-    if (filebar.classList.contains('current')) {
-        filebar.classList.remove('current');
-        filebar.classList.add('default');
-    }
+    // if (filebar.classList.contains('current')) {
+    //     filebar.classList.remove('current');
+    //     filebar.classList.add('default');
+    // }
 
-    if (sendbar.classList.contains('current')) {
-        sendbar.classList.remove('current');
-        sendbar.classList.add('default');
-    }
+    // if (sendbar.classList.contains('current')) {
+    //     sendbar.classList.remove('current');
+    //     sendbar.classList.add('default');
+    // }
 
     if (upbar.classList.contains('current')) {
         upbar.classList.remove('current');
@@ -540,8 +540,8 @@ function onSignIn(googleUser) {
     if (id_token !== undefined && id_token !== '' && id_token !== null) {
         showUpload();
         loginbar.style.display = "none";
-        filebar.style.display = "block";
-        sendbar.style.display = "block";
+        // filebar.style.display = "block";
+        // sendbar.style.display = "block";
         upbar.style.display = "block";
         signOutbar.style.display = "block";
         //greet user on the website
