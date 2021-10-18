@@ -77,7 +77,7 @@ function sendData() {
 
 /* Retrieves data from the database via a GET request */
 async function getData() {
-
+    dbData=""
     for (i in storedCsv) {
         if (document.getElementById(storedCsv[i]).checked) {
             var httpr = new XMLHttpRequest();
@@ -87,6 +87,8 @@ async function getData() {
                 dbData += this.responseText;
                 // calls function to convert data from database to obj
                 convertToObject()
+                mergeData()
+                showData()
             }
             httpr.open("GET", `get.php?lecturer=${lecturer}&spreadsheet=${storedCsv[i]}`);
             httpr.send();
@@ -121,9 +123,7 @@ function convertToObject() {
     data = obj; //Stores the Object of Objects in data variable.
 }
 async function csvMerge() {
-    await getData()
-        .then(() => mergeData())
-        .then(() => showData())
+    getData()
 }
 
 /* Merges retrieved data from database with email template.*/
