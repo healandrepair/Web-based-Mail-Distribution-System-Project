@@ -3,17 +3,12 @@
 /* Checks lecturer name to prevent sql injection */
 function checker($s)
 {
-  $result = array();
-  foreach(str_split($s) as $ch)
-    {
-      if ($ch == "\\" || $ch == "%" || $ch == "_" || $ch == "=" || $ch == "'")
-        {
-          $result[] = "\\";
-        } 
-      $result[] = $ch;
-    } 
-  return
-      implode("", $result);
+  
+  $result = str_replace( array( '\'', '"',
+  ',' , ';', '<', '>', "%", "=", "_"), ' ', $s);
+    
+  
+  return $result;
 }
 
 
