@@ -48,7 +48,7 @@
             <!-- name of CSV file chosen -->
             <span id="csvFileChosen">No file chosen</span>
             <br />
-            <input type="submit" value="Show preview" />
+            <input type="submit" value="Show preview" onclick="previewData()"/>
             <br />
             <input type="submit" value="Save CSV file" onclick="sendData()" />
         </form>
@@ -70,7 +70,6 @@
             <label> Select CSV file to merge with email template</label>
             <div id='showfiles'></div>
             <input type="button" value="Merge with Template" onclick="csvMerge()">
-            <span>(Please press twice)</span>
         </form>
         <!--Send email form-->
         <form>
