@@ -25,7 +25,7 @@ function sendMail() {
         email = email.replace(subjectLine, '').trim();
         var subjectText = subjectLine.slice(subjectLine.indexOf(':') + 1).trim();
         console.log(email)
-        //Create and Post AJAX HttpRequest to SendMail.php
+            //Create and Post AJAX HttpRequest to SendMail.php
         var httpr = new XMLHttpRequest();
         var fd = new FormData();
         fd.append("student", student);
@@ -41,7 +41,7 @@ function sendMail() {
 
 /* Sends data to the database via a POST request */
 function sendData() {
-    const data = csvData(function(data,spreadSheet){
+    const data = csvData(function(data, spreadSheet) {
         csvValues = data[1]
         column = data[0]
         lecturer = localStorage.getItem('lecturer')
@@ -70,8 +70,8 @@ function sendData() {
 
 /* Retrieves data from the database via a GET request */
 async function getData() {
-    var dbData=""
-    const storedCsv = getStoredCsvCallback(function(storedCsv){
+    var dbData = ""
+    const storedCsv = getStoredCsvCallback(function(storedCsv) {
         for (i in storedCsv) {
             console.log(document.getElementById(storedCsv[i]))
             if (document.getElementById(storedCsv[i]).checked) {
@@ -92,7 +92,7 @@ async function getData() {
             }
         }
     })
-    
+
 }
 
 /* Converts retrieved data from database to object type.*/
@@ -125,7 +125,7 @@ async function csvMerge() {
     getData()
 }
 
-function getTemplate(callback){
+function getTemplate(callback) {
     input = txtFile.files[0];
     var reader = new FileReader();
     reader.onload = function(e) {
@@ -140,7 +140,7 @@ function getTemplate(callback){
 
 /* Merges retrieved data from database with email template.*/
 async function mergeData(data) {
-    const template = getTemplate(function(textTemplate){
+    const template = getTemplate(function(textTemplate) {
         emails = {};
         //loop through each dict obj containing CSV values of each student
         for (const [StudentEmail, StudentData] of Object.entries(data)) {
@@ -175,7 +175,7 @@ async function mergeData(data) {
             email += '\n\n------------\n\n'
             emails[StudentEmail] = email
         }
-    
+
         console.log("emails", emails);
         showData()
     })
@@ -200,8 +200,8 @@ function showData() {
 const showHome = () => {
     document.getElementById('home').style.display = 'block'
     document.getElementById('upload').style.display = 'none'
-    // document.getElementById('files').style.display = 'none'
-    // document.getElementById('send').style.display = 'none'
+        // document.getElementById('files').style.display = 'none'
+        // document.getElementById('send').style.display = 'none'
     document.getElementById('login').style.display = 'none'
 
 
@@ -230,8 +230,8 @@ const showHome = () => {
 const showUpload = () => {
     document.getElementById('upload').style.display = 'block'
     document.getElementById('home').style.display = 'none'
-    // document.getElementById('files').style.display = 'none'
-    // document.getElementById('send').style.display = 'none'
+        // document.getElementById('files').style.display = 'none'
+        // document.getElementById('send').style.display = 'none'
     document.getElementById('login').style.display = 'none'
 
     // if (filebar.classList.contains('current')) {
@@ -287,8 +287,8 @@ const showUpload = () => {
 const showSend = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
-    // document.getElementById('files').style.display = 'none'
-    // document.getElementById('send').style.display = 'block'
+        // document.getElementById('files').style.display = 'none'
+        // document.getElementById('send').style.display = 'block'
     document.getElementById('login').style.display = 'none'
 
 
@@ -316,8 +316,8 @@ const showSend = () => {
 const showLogin = () => {
     document.getElementById('upload').style.display = 'none'
     document.getElementById('home').style.display = 'none'
-    // document.getElementById('files').style.display = 'none'
-    // document.getElementById('send').style.display = 'none'
+        // document.getElementById('files').style.display = 'none'
+        // document.getElementById('send').style.display = 'none'
     document.getElementById('login').style.display = 'block'
 
 
@@ -584,7 +584,7 @@ function csvData(callback) {
 
         // Adds table to page
         main.appendChild(table);
-        callback(data,spreadSheet)
+        callback(data, spreadSheet)
     };
     reader.readAsText(input);
 
@@ -595,8 +595,8 @@ function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
     lecturer = profile.getGivenName();
-    localStorage.setItem('lecturer',lecturer)
-    //get all stored CSV files of the lecturer
+    localStorage.setItem('lecturer', lecturer)
+        //get all stored CSV files of the lecturer
     getStoredCsv()
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
@@ -627,7 +627,7 @@ function signOut() {
     auth.signOut().then(function() {
         //Button should say "Sign in" instead of "Signed in"
         auth.disconnect();
-        document.location.href = "http://localhost/Web-based-Mail-Distribution-System-Project/csv.html";
+        document.location.href = "http://gunit.online/#";
         console.log('user signed out');
         document.querySelector('#content').innerText = " ";
     })
@@ -639,20 +639,20 @@ function getStoredCsvCallback(callback) {
     httpr.onload = function() {
         const serverResponse = document.getElementById("serverResponse");
         var storedCsv = this.responseText.split(',')
-        // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
+            // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
         for (i in this.responseText.split(',')) {
-            if (document.getElementById(this.responseText.split(',')[i]) == null){
+            if (document.getElementById(this.responseText.split(',')[i]) == null) {
                 var myDiv = document.getElementById("showfiles");
                 var checkbox = document.createElement('input');
                 checkbox.type = "checkbox";
                 checkbox.name = "name";
                 checkbox.value = "value";
                 checkbox.id = this.responseText.split(',')[i];
-    
+
                 var label = document.createElement('label');
-    
+
                 label.htmlFor = this.responseText.split(',')[i];
-    
+
                 label.appendChild(document.createTextNode(this.responseText.split(',')[i]));
                 myDiv.appendChild(checkbox);
                 myDiv.appendChild(label);
@@ -670,20 +670,20 @@ function getStoredCsv() {
     httpr.onload = function() {
         const serverResponse = document.getElementById("serverResponse");
         var storedCsv = this.responseText.split(',')
-        // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
+            // serverResponse.innerHTML = this.responseText; // Right not it prints the data out at @serviceResponse
         for (i in this.responseText.split(',')) {
-            if (document.getElementById(this.responseText.split(',')[i]) == null){
+            if (document.getElementById(this.responseText.split(',')[i]) == null) {
                 var myDiv = document.getElementById("showfiles");
                 var checkbox = document.createElement('input');
                 checkbox.type = "checkbox";
                 checkbox.name = "name";
                 checkbox.value = "value";
                 checkbox.id = this.responseText.split(',')[i];
-    
+
                 var label = document.createElement('label');
-    
+
                 label.htmlFor = this.responseText.split(',')[i];
-    
+
                 label.appendChild(document.createTextNode(this.responseText.split(',')[i]));
                 myDiv.appendChild(checkbox);
                 myDiv.appendChild(label);
