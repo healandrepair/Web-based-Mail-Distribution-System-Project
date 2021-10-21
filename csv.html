@@ -4,7 +4,8 @@
     <script src="csv.js" type="text/javascript" defer="true"></script>
     <!--Link to OAuth Client-->
     <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="76402056268-9am1s8mvc62hj3f7c4d0r6aj03n4oask.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+        content="76402056268-9am1s8mvc62hj3f7c4d0r6aj03n4oask.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
@@ -16,7 +17,9 @@
 
     <!--Side navigation bar-->
     <div class="sidenav">
-        <img src="https://learningessentials.auckland.ac.nz/files/2019/09/UOA-VR-RGB.png" alt="uoa logo" onclick="showHome();" style="width:75%; margin: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto; cursor: pointer;">
+        <img src="https://learningessentials.auckland.ac.nz/files/2019/09/UOA-VR-RGB.png" alt="uoa logo"
+            onclick="showHome();"
+            style="width:75%; margin: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto; cursor: pointer;">
         <a id="loginbar" href="#" onclick="showLogin()" class="default">Log in</a>
         <a id="upbar" href="#" onclick="showUpload()" class="default" style="display: none;">Upload</a>
         <!-- <a id="filebar" href="#" onclick="showFiles()" class="default" style="display: none;">Files</a>
@@ -27,7 +30,8 @@
     <!--Homepage-->
     <div id="home" class="main" style="display: block;">
         <h1 class="center">Team 13 G-Unit Feedback Sending Project</h1>
-        <img src="https://data.whicdn.com/images/323598982/original.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
+        <img src="https://data.whicdn.com/images/323598982/original.gif" alt="Image goes here &#129371;" height=50%
+            class="centered" style="border: 5px solid #05457f;">
     </div>
 
     <!-- Login page -->
@@ -38,6 +42,36 @@
 
     <!--Upload page-->
     <div id="upload" class="main" style="display: none;">
+
+        <!-- Trigger/Open The Modal
+        <button id="myBtn">Open Modal</button> -->
+
+        <!-- The Modal -->
+        <div id="ModalCSV" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p id="serverResponse" style="text-align: center;"></p>
+            </div>
+
+        </div>
+
+
+        
+        <!-- EMAIL Modal -->
+        <div id="ModalEMAIL" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p style="text-align: center;">E-mails have been sent out to respective student(s)</p>
+            </div>
+
+        </div>
+
+
+
         <h1>Upload Files and Send Emails</h1>
         <!--CSV upload form-->
         <form id="opener">
@@ -48,9 +82,9 @@
             <!-- name of CSV file chosen -->
             <span id="csvFileChosen">No file chosen</span>
             <br />
-            <input type="submit" value="Show preview" onclick="previewData()"/>
+            <input type="submit" value="Show preview" onclick="previewData()" />
             <br />
-            <input type="submit" value="Save CSV file" onclick="sendData()" />
+            <input id="myBtn"type="submit" value="Save CSV file" onclick="sendData()" />
         </form>
 
         <!--Template upload form-->
@@ -73,9 +107,9 @@
         </form>
         <!--Send email form-->
         <form>
-            <input type="button" value="Send Email(s) to Student(s)" onclick="sendMail()">
+            <input id="emailBtn" type="button" value="Send Email(s) to Student(s)" onclick="sendMail()">
         </form>
-        <p id="serverResponse" style="padding-left: 200px"></p>
+        <!-- <p id="serverResponse" style="padding-left: 200px"></p> -->
         <div style="float: left; width:50%;">
             <h2>CSV Table</h2>
         </div>

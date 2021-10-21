@@ -19,6 +19,9 @@ signOutbar = document.getElementById('signOutbar');
 
 /* Sends emails via a POST request */
 function sendMail() {
+    modalEmail.style.display = "block";
+
+
     for (var [student, email] of Object.entries(emails)) {
         //get the subject text for the email and remove it from email template
         var subjectLine = email.slice(email.indexOf('Subject'), email.indexOf('\n') + 1);
@@ -42,6 +45,7 @@ function sendMail() {
 /* Sends data to the database via a POST request */
 function sendData() {
     const data = csvData(function(data, spreadSheet) {
+        modal.style.display = "block";
         csvValues = data[1]
         column = data[0]
         lecturer = localStorage.getItem('lecturer')
@@ -694,3 +698,33 @@ function getStoredCsv() {
     httpr.open("GET", `getcsv.php?lecturer=${lecturer}`);
     httpr.send();
 }
+
+// Get the modal
+var modal = document.getElementById("ModalCSV");
+var modalEmail = document.getElementById("ModalEMAIL");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+var emailbtn = document.getElementById("emailBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+var span1 = document.getElementsByClassName("close")[1];
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+span1.onclick = function() {
+    modalEmail.style.display = "none";
+  }
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal || event.target == modalEmail ) {
+    modal.style.display = "none";
+    modalEmail.style.display = "none";
+  }
+} 
