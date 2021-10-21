@@ -1,5 +1,5 @@
 # Project Name: Web Based Mail Distribution System 
-![titlepage](https://user-images.githubusercontent.com/54693111/129130782-cce765e3-cbbd-4530-8115-d19cbc4856a9.jpg)
+![G Unit logo](https://user-images.githubusercontent.com/54693111/138274242-9a7e10e0-ddff-4971-b49a-b4ac8891b545.png)
 
 ## Team 13 Roles 
 
