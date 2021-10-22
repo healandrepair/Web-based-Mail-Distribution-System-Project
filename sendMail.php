@@ -5,8 +5,8 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once "vendor/autoload.php";
 //Recieve POST from JS file 
+$student = $_POST['student'];
 $email = $_POST['email'];
-$template = $_POST['template'];
 $subjectText = $_POST['subjectText'];
 
 $mail = new PHPMailer(true);
@@ -39,14 +39,14 @@ $mail->From = "name@gmail.com";
 $mail->FromName = "Marks & Feedback";
 
 //Recipient Email
-$mail->addAddress("$email@aucklanduni.ac.nz","test");
+$mail->addAddress("$student@aucklanduni.ac.nz","test");
 
 //set Email to not Html format
 $mail->isHTML(false);
 
 //Set Subject and Body for email
 $mail->Subject = "$subjectText"; 
-$mail->Body = "$template";
+$mail->Body = "$email";
 
 try {
     $mail->send();
