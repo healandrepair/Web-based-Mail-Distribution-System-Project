@@ -4,22 +4,19 @@
     <script src="csv.js" type="text/javascript" defer="true"></script>
     <!--Link to OAuth Client-->
     <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id"
-        content="76402056268-9am1s8mvc62hj3f7c4d0r6aj03n4oask.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="76402056268-9am1s8mvc62hj3f7c4d0r6aj03n4oask.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
 
     <!-- show username -->
-    <div id="content" style="display: block; position: fixed; right: 0; top: 0;">
+    <div id="content" style="display: block; position: fixed; right: 0; top: 0; padding:10px">
     </div>
 
     <!--Side navigation bar-->
     <div class="sidenav">
-        <img src="https://learningessentials.auckland.ac.nz/files/2019/09/UOA-VR-RGB.png" alt="uoa logo"
-            onclick="showHome();"
-            style="width:75%; margin: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto; cursor: pointer;">
+        <img src="https://learningessentials.auckland.ac.nz/files/2019/09/UOA-VR-RGB.png" alt="uoa logo" onclick="showHome();" style="width:75%; margin: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto; cursor: pointer;">
         <a id="loginbar" href="#" onclick="showLogin()" class="default">Log in</a>
         <a id="upbar" href="#" onclick="showUpload()" class="default" style="display: none;">Upload</a>
         <!-- <a id="filebar" href="#" onclick="showFiles()" class="default" style="display: none;">Files</a>
@@ -30,8 +27,7 @@
     <!--Homepage-->
     <div id="home" class="main" style="display: block;">
         <h1 class="center">Web Based Email Distribution System</h1>
-        <img src="https://data.whicdn.com/images/323598982/original.gif" alt="Image goes here &#129371;" height=50%
-            class="centered" style="border: 5px solid #05457f;">
+        <img src="https://data.whicdn.com/images/323598982/original.gif" alt="Image goes here &#129371;" height=50% class="centered" style="border: 5px solid #05457f;">
     </div>
 
     <!-- Login page -->
@@ -58,7 +54,7 @@
         </div>
 
 
-        
+
         <!-- EMAIL Modal -->
         <div id="ModalEMAIL" class="modal">
 
@@ -84,7 +80,7 @@
             <br />
             <input type="submit" value="Show preview" onclick="previewData()" />
             <br />
-            <input id="myBtn"type="submit" value="Save CSV file" onclick="sendData()" />
+            <input id="myBtn" type="submit" value="Save CSV file" onclick="sendData()" />
         </form>
 
         <!--Template upload form-->
@@ -96,7 +92,7 @@
             <!-- name of template chosen -->
             <span id="templateChosen">No file chosen</span>
             <br />
-            <input type="submit" value="Show preview" />
+            <input type="submit" value="Show preview" onclick="showTemplate()" />
         </form>
 
         <!--Files form-->
